@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using WpfApplication3.Annotations;
 
 namespace WpfApplication3
@@ -131,6 +134,9 @@ namespace WpfApplication3
             }
         }
 
+        private readonly Timer _worker;
+        private readonly Timer _dispatchedWorker;
+
         public MainViewModel()
         {
             Vehicles.Add(new Car() { Capacity = 5, Make = "Fiat", Model = "Punto" });
@@ -138,6 +144,30 @@ namespace WpfApplication3
             Vehicles.Add(new Car() { Capacity = 5, Make = "Ford", Model = "Fiesta" });
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "BigTruck", WheelBase = "Large" });
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "SmallTruck", WheelBase = "Small" });
+
+            _worker = new Timer(o => ChangeSomething(), null, 1000, Timeout.Infinite);
+            _dispatchedWorker = new Timer(o => DispatchedChange(), null, 1000, Timeout.Infinite);
+        }
+
+        void DispatchedChange()
+        {
+            var randomVehicle = Vehicles[new Random().Next(0, Vehicles.Count - 1)];
+
+            Application.Current.Dispatcher.BeginInvoke(
+                new Action(() =>
+                {
+                    randomVehicle.Make = randomVehicle.Make + "x";
+                }), DispatcherPriority.Normal);
+
+            _dispatchedWorker.Change(6000, Timeout.Infinite);
+        }
+
+        void ChangeSomething()
+        {
+            var randomVehicle = Vehicles[new Random().Next(0, Vehicles.Count - 1)];
+
+            randomVehicle.Capacity = randomVehicle.Capacity + 1;
+            _worker.Change(6000, Timeout.Infinite);
         }
 
         void AddTruck()
