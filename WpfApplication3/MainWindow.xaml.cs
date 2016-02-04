@@ -118,6 +118,8 @@ namespace WpfApplication3
         private Vehicle _selectedVehicle;
         public ObservableCollection<Vehicle> Vehicles { get; } = new ObservableCollection<Vehicle>();
 
+        public DelegateCommand AddTruckCommand => new DelegateCommand(AddTruck);
+
         public Vehicle SelectedVehicle
         {
             get { return _selectedVehicle; }
@@ -136,6 +138,13 @@ namespace WpfApplication3
             Vehicles.Add(new Car() { Capacity = 5, Make = "Ford", Model = "Fiesta" });
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "BigTruck", WheelBase = "Large" });
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "SmallTruck", WheelBase = "Small" });
+        }
+
+        void AddTruck()
+        {
+            var truck = new Truck();
+            Vehicles.Add(truck);
+            SelectedVehicle = truck;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
