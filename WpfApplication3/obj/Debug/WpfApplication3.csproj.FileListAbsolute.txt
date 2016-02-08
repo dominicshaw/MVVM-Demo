@@ -20,3 +20,5 @@ C:\Work\WpfApplication3\WpfApplication3\obj\Debug\TruckControl.baml
 C:\Work\WpfApplication3\WpfApplication3\obj\Debug\App.baml
 C:\Work\WpfApplication3\WpfApplication3\obj\Debug\CircularProgressBar.baml
 C:\Work\WpfApplication3\WpfApplication3\obj\Debug\CircularProgressBar.g.cs
+C:\Work\WpfApplication3\WpfApplication3\obj\Debug\VehicleControl.g.cs
+C:\Work\WpfApplication3\WpfApplication3\obj\Debug\VehicleControl.baml

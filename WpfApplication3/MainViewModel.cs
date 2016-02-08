@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +21,13 @@ namespace WpfApplication3
 
         private bool CanSaveVehicle(Vehicle arg)
         {
-            return arg?.Make == "Test";
+            if (arg == null)
+                return false;
+
+            return !string.IsNullOrEmpty(arg.Make) && !string.IsNullOrEmpty(arg.Model);
         }
 
-        public ICommand AddTruckCommand => new DelegateCommand(AddTruck);
+        public ICommand AddVehicleCommand => new DelegateCommand<string>(AddVehicle);
 
         public Vehicle SelectedVehicle
         {
@@ -47,9 +51,21 @@ namespace WpfApplication3
             }
         }
 
+        public bool BackgroundThreadUpdates
+        {
+            get { return _backgroundThreadUpdates; }
+            set
+            {
+                if (value == _backgroundThreadUpdates) return;
+                _backgroundThreadUpdates = value;
+                OnPropertyChanged();
+            }
+        }
+
         private readonly Timer _worker;
         private readonly Timer _dispatchedWorker;
         private bool _working;
+        private bool _backgroundThreadUpdates;
 
         public MainViewModel()
         {
@@ -65,28 +81,47 @@ namespace WpfApplication3
 
         void DispatchedChange()
         {
-            var randomVehicle = Vehicles[new Random().Next(0, Vehicles.Count - 1)];
+            try
+            {
+                if (!BackgroundThreadUpdates)
+                    return;
 
-            Application.Current.Dispatcher.BeginInvoke(
-                new Action(() =>
-                {
-                    randomVehicle.Make = randomVehicle.Make + "x";
-                }), DispatcherPriority.Normal);
+                var randomVehicle = Vehicles[new Random().Next(0, Vehicles.Count - 1)];
 
-            _dispatchedWorker.Change(6000, Timeout.Infinite);
+                Application.Current.Dispatcher.BeginInvoke(
+                    new Action(() =>
+                    {
+                        randomVehicle.Make = randomVehicle.Make + "x";
+                    }), DispatcherPriority.Normal);
+            }
+            finally
+            {
+                _dispatchedWorker.Change(6000, Timeout.Infinite);
+            }
         }
 
         void ChangeSomething()
         {
-            var randomVehicle = Vehicles[new Random().Next(0, Vehicles.Count - 1)];
+            try
+            {
+                if (!BackgroundThreadUpdates)
+                    return;
 
-            randomVehicle.Capacity = randomVehicle.Capacity + 1;
-            _worker.Change(6000, Timeout.Infinite);
+                var randomVehicle = Vehicles[new Random().Next(0, Vehicles.Count - 1)];
+
+                randomVehicle.Capacity = randomVehicle.Capacity + 1;
+            }
+            finally
+            {
+                _worker.Change(6000, Timeout.Infinite);
+            }
         }
 
-        void AddTruck()
-        { 
-            SelectedVehicle = new Truck();
+        void AddVehicle(string type)
+        {
+            var nameSpace = Assembly.GetExecutingAssembly().GetName().Name;
+            // happens that the assembly name and namespace for the type are the same - this may require amendment if the type moved / assembley renamed
+            SelectedVehicle = (Vehicle) Activator.CreateInstance(nameSpace, $"{nameSpace}.{type}").Unwrap();
         }
 
         async Task SaveVehicle(Vehicle vehicle)

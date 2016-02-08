@@ -68,6 +68,9 @@
       <DependentUpon>TruckControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vehicle.cs" />
+    <Compile Include="VehicleControl.xaml.cs">
+      <DependentUpon>VehicleControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="CarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -92,6 +95,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="TruckControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VehicleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

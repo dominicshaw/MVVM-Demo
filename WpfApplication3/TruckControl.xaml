@@ -13,7 +13,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -31,7 +30,5 @@
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Model}" />
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Capacity}" />
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding WheelBase}" />  
-        
-        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Save" Command="{Binding Source={StaticResource MainViewModel}, Path=SaveVehicleCommand}" CommandParameter="{Binding}" />
     </Grid>
 </UserControl>
