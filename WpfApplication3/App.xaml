@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:WpfApplication3"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <local:MainViewModel x:Key="MainViewModel" />
+
+        <local:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
+        <local:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
     </Application.Resources>
 </Application>

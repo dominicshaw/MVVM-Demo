@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication3"
         mc:Ignorable="d"
+        DataContext="{StaticResource MainViewModel}"
         Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance local:MainViewModel}">
 
     <Window.Resources>
@@ -17,18 +18,26 @@
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
-    
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Button Margin="5,2" Grid.Row="0" Content="Add Truck" Command="{Binding AddTruckCommand}" />
-        <DataGrid Grid.Row="1" x:Name="grd" ItemsSource="{Binding Vehicles}" SelectedItem="{Binding SelectedVehicle, Mode=TwoWay}" />
-        <ContentPresenter Grid.Row="2" Content="{Binding SelectedVehicle, Mode=TwoWay}"></ContentPresenter>
-        <TextBlock Grid.Row="3" Text="{Binding ElementName=grd, Path=SelectedItem}"></TextBlock>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Button Margin="5,2" Grid.Row="0" Content="Add Truck" Command="{Binding AddTruckCommand}" />
+            <DataGrid Grid.Row="1" x:Name="grd" ItemsSource="{Binding Vehicles}" SelectedItem="{Binding SelectedVehicle, Mode=TwoWay}" />
+            <ContentPresenter Grid.Row="2" Content="{Binding SelectedVehicle, Mode=TwoWay}"></ContentPresenter>
+            <TextBlock Grid.Row="3" Text="{Binding ElementName=grd, Path=SelectedItem}"></TextBlock>
+        </Grid>
+
+        <Grid Visibility="{Binding Working, Converter={StaticResource BooleanVisibilityConverter}}">
+            <Grid Background="Black" Opacity="0.4" />
+            <local:CircularProgressBar />
+        </Grid>
     </Grid>
+    
     
 </Window>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace WpfApplication3
@@ -7,7 +8,6 @@ namespace WpfApplication3
     {
         void RaiseCanExecuteChanged();
     }
-
     // And an extension method to make it easy to raise changed events
     public static class CommandExtensions
     {
@@ -59,8 +59,14 @@ namespace WpfApplication3
 
         public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add
+            {
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+            }
         }
 
         public void RaiseCanExecuteChanged()

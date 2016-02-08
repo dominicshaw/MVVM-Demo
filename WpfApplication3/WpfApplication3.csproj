@@ -55,11 +55,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AsyncCommand.cs" />
+    <Compile Include="Car.cs" />
+    <Compile Include="CircularProgressBar.xaml.cs">
+      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters.cs" />
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="Truck.cs" />
     <Compile Include="TruckControl.xaml.cs">
       <DependentUpon>TruckControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vehicle.cs" />
     <Page Include="CarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CircularProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

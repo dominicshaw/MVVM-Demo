@@ -17,3 +17,6 @@ C:\Work\WpfApplication3\WpfApplication3\obj\Debug\TruckControl.g.cs
 C:\Work\WpfApplication3\WpfApplication3\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Work\WpfApplication3\WpfApplication3\obj\Debug\CarControl.baml
 C:\Work\WpfApplication3\WpfApplication3\obj\Debug\TruckControl.baml
+C:\Work\WpfApplication3\WpfApplication3\obj\Debug\App.baml
+C:\Work\WpfApplication3\WpfApplication3\obj\Debug\CircularProgressBar.baml
+C:\Work\WpfApplication3\WpfApplication3\obj\Debug\CircularProgressBar.g.cs

@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="WpfApplication3.CircularProgressBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="Auto" Width="Auto" Background="Transparent"
+             IsVisibleChanged="HandleVisibleChanged" x:Name="ctrl">
+    <Grid x:Name="LayoutRoot" Background="Transparent"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch">
+        <Canvas RenderTransformOrigin="0.5,0.5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" Width="{Binding ElementName=ctrl, Path=HeightAndWidth, Mode=TwoWay}"
+                Height="{Binding ElementName=ctrl, Path=HeightAndWidth, Mode=TwoWay}" Loaded="HandleLoaded"
+                Unloaded="HandleUnloaded"  >
+            <Ellipse x:Name="C0" Width="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}" Height="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}"
+                     Canvas.Left="0"
+                     Canvas.Top="0" Stretch="Fill"
+                     Fill="Black" Opacity="1.0"/>
+            <Ellipse x:Name="C1" Width="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}" Height="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}"
+                     Canvas.Left="0"
+                     Canvas.Top="0" Stretch="Fill"
+                     Fill="Black" Opacity="0.9"/>
+            <Ellipse x:Name="C2" Width="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}" Height="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}"
+                     Canvas.Left="0"
+                     Canvas.Top="0" Stretch="Fill"
+                     Fill="Black" Opacity="0.8"/>
+            <Ellipse x:Name="C3" Width="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}" Height="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}"
+                     Canvas.Left="0"
+                     Canvas.Top="0" Stretch="Fill"
+                     Fill="Black" Opacity="0.7"/>
+            <Ellipse x:Name="C4" Width="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}" Height="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}"
+                     Canvas.Left="0"
+                     Canvas.Top="0" Stretch="Fill"
+                     Fill="Black" Opacity="0.6"/>
+            <Ellipse x:Name="C5" Width="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}" Height="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}"
+                     Canvas.Left="0"
+                     Canvas.Top="0" Stretch="Fill"
+                     Fill="Black" Opacity="0.5"/>
+            <Ellipse x:Name="C6" Width="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}" Height="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}"
+                     Canvas.Left="0"
+                     Canvas.Top="0" Stretch="Fill"
+                     Fill="Black" Opacity="0.4"/>
+            <Ellipse x:Name="C7" Width="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}" Height="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}"
+                     Canvas.Left="0"
+                     Canvas.Top="0" Stretch="Fill"
+                     Fill="Black" Opacity="0.3"/>
+            <Ellipse x:Name="C8" Width="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}" Height="{Binding ElementName=ctrl, Path=BallSize, Mode=TwoWay}"
+                     Canvas.Left="0"
+                     Canvas.Top="0" Stretch="Fill"
+                     Fill="Black" Opacity="0.2"/>
+            <Canvas.RenderTransform>
+                <RotateTransform x:Name="SpinnerRotate"
+                     Angle="0" />
+            </Canvas.RenderTransform>
+        </Canvas>
+    </Grid>
+</UserControl>
