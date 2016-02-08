@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace WpfApplication3
 {
     public class Car : Vehicle
@@ -18,6 +20,17 @@ namespace WpfApplication3
         public Car() : base("Car")
         {
 
+        }
+
+        public override async Task<bool> Save()
+        {
+            // save base class
+            var success = await base.Save();
+
+            if (success)
+                await Task.Delay(250); // simulated save of car specific code
+
+            return true;
         }
     }
 }

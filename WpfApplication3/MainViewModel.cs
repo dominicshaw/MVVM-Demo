@@ -69,9 +69,9 @@ namespace WpfApplication3
 
         public MainViewModel()
         {
-            Vehicles.Add(new Car() { Capacity = 5, Make = "Fiat", Model = "Punto" });
-            Vehicles.Add(new Car() { Capacity = 4, Make = "Renault", Model = "Megane" });
-            Vehicles.Add(new Car() { Capacity = 5, Make = "Ford", Model = "Fiesta" });
+            Vehicles.Add(new Car() { Capacity = 5, Make = "Fiat", Model = "Punto", TopSpeed = 70 });
+            Vehicles.Add(new Car() { Capacity = 4, Make = "Renault", Model = "Megane", TopSpeed = 80 });
+            Vehicles.Add(new Car() { Capacity = 5, Make = "Ford", Model = "Fiesta", TopSpeed = 90});
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "BigTruck", WheelBase = "Large" });
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "SmallTruck", WheelBase = "Small" });
 
@@ -128,8 +128,7 @@ namespace WpfApplication3
         {
             Working = true;
 
-            // simulated slow database save
-            await Task.Delay(500);
+            await vehicle.Save();
 
             if(!Vehicles.Contains(vehicle))
                 Vehicles.Add(vehicle);

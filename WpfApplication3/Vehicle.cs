@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using WpfApplication3.Annotations;
 
 namespace WpfApplication3
@@ -58,6 +59,13 @@ namespace WpfApplication3
         protected Vehicle(string type)
         {
             Type = type;
+        }
+
+        public virtual async Task<bool> Save()
+        {
+            // simulated slow database save
+            await Task.Delay(250);
+            return true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
