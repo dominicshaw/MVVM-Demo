@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using WpfApplication3.Annotations;
 
-namespace WpfApplication3
+namespace WpfApplication3.ViewModels
 {
     public abstract class Vehicle : INotifyPropertyChanged
     {

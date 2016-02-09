@@ -1,12 +1,13 @@
 ﻿<Application x:Class="WpfApplication3.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfApplication3"
+             xmlns:viewModels="clr-namespace:WpfApplication3.ViewModels"
+             xmlns:mvvm="clr-namespace:WpfApplication3.MVVM"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <local:MainViewModel x:Key="MainViewModel" />
+        <viewModels:MainViewModel x:Key="MainViewModel" />
 
-        <local:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
-        <local:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+        <mvvm:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
+        <mvvm:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
     </Application.Resources>
 </Application>

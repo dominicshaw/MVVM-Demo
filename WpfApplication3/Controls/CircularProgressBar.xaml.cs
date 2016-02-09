@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace WpfApplication3
+namespace WpfApplication3.Controls
 {
     /// <summary>
     /// Interaction logic for CircularProgressBar.xaml

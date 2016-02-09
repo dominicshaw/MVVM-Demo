@@ -55,27 +55,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AsyncCommand.cs" />
-    <Compile Include="Car.cs" />
-    <Compile Include="CircularProgressBar.xaml.cs">
+    <Compile Include="MVVM\AsyncCommand.cs" />
+    <Compile Include="ViewModels\Car.cs" />
+    <Compile Include="Controls\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters.cs" />
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="MainViewModel.cs" />
-    <Compile Include="Truck.cs" />
-    <Compile Include="TruckControl.xaml.cs">
+    <Compile Include="MVVM\Converters.cs" />
+    <Compile Include="MVVM\DelegateCommand.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Truck.cs" />
+    <Compile Include="Controls\TruckControl.xaml.cs">
       <DependentUpon>TruckControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vehicle.cs" />
-    <Compile Include="VehicleControl.xaml.cs">
+    <Compile Include="ViewModels\Vehicle.cs" />
+    <Compile Include="Controls\VehicleControl.xaml.cs">
       <DependentUpon>VehicleControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="CarControl.xaml">
+    <Page Include="Controls\CarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CircularProgressBar.xaml">
+    <Page Include="Controls\CircularProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -87,18 +87,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CarControl.xaml.cs">
+    <Compile Include="Controls\CarControl.xaml.cs">
       <DependentUpon>CarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TruckControl.xaml">
+    <Page Include="Controls\TruckControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VehicleControl.xaml">
+    <Page Include="Controls\VehicleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

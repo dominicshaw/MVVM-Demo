@@ -9,8 +9,9 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WpfApplication3.Annotations;
+using WpfApplication3.MVVM;
 
-namespace WpfApplication3
+namespace WpfApplication3.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {

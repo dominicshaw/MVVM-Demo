@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WpfApplication3
+namespace WpfApplication3.MVVM
 {
     public interface IAsyncCommand : IAsyncCommand<object>
     {
