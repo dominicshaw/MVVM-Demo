@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Work\WpfApplication3\WpfApplication3\obj\Debug\
+C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\obj\Debug\
 WpfApplication3
 none
 false
 DEBUG;TRACE
-C:\Work\WpfApplication3\WpfApplication3\App.xaml
+C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\App.xaml
 5618394900
 
-17-1842569493
-13738642453
+18-1361808812
+15-810677909
 Controls\CarControl.xaml;Controls\CircularProgressBar.xaml;MainWindow.xaml;Controls\TruckControl.xaml;Controls\VehicleControl.xaml;
 
 False

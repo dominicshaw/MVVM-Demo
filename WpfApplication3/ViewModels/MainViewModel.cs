@@ -15,19 +15,20 @@ namespace WpfApplication3.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        #region " background variables "
+        private readonly object _sync = new object();
+        private readonly Random _random = new Random();
+        private readonly Timer _worker;
+        private readonly Timer _dispatchedWorker;
+        private bool _working;
+        private bool _backgroundThreadUpdates;
+
         private Vehicle _selectedVehicle;
+        #endregion
+
         public ObservableCollection<Vehicle> Vehicles { get; } = new ObservableCollection<Vehicle>();
 
         public ICommand SaveVehicleCommand => new AsyncCommand<Vehicle>(SaveVehicle, CanSaveVehicle);
-
-        private bool CanSaveVehicle(Vehicle arg)
-        {
-            if (arg == null)
-                return false;
-
-            return !string.IsNullOrEmpty(arg.Make) && !string.IsNullOrEmpty(arg.Model);
-        }
-
         public ICommand AddVehicleCommand => new DelegateCommand<string>(AddVehicle);
 
         public Vehicle SelectedVehicle
@@ -62,12 +63,7 @@ namespace WpfApplication3.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private readonly Timer _worker;
-        private readonly Timer _dispatchedWorker;
-        private bool _working;
-        private bool _backgroundThreadUpdates;
-
+        
         public MainViewModel()
         {
             Vehicles.Add(new Car() { Capacity = 5, Make = "Fiat", Model = "Punto", TopSpeed = 70 });
@@ -76,18 +72,18 @@ namespace WpfApplication3.ViewModels
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "BigTruck", WheelBase = "Large" });
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "SmallTruck", WheelBase = "Small" });
 
-            _worker = new Timer(o => ChangeSomething(), null, 1000, Timeout.Infinite);
+            _worker = new Timer(o => BackgroundChange(), null, 1000, Timeout.Infinite);
             _dispatchedWorker = new Timer(o => DispatchedChange(), null, 1000, Timeout.Infinite);
         }
 
-        void DispatchedChange()
+        private void DispatchedChange()
         {
             try
             {
                 if (!BackgroundThreadUpdates)
                     return;
 
-                var randomVehicle = Vehicles[new Random().Next(0, Vehicles.Count - 1)];
+                var randomVehicle = GetRandomVehicle();
 
                 Application.Current.Dispatcher.BeginInvoke(
                     new Action(() =>
@@ -101,31 +97,39 @@ namespace WpfApplication3.ViewModels
             }
         }
 
-        void ChangeSomething()
+        private void BackgroundChange()
         {
             try
             {
                 if (!BackgroundThreadUpdates)
                     return;
 
-                var randomVehicle = Vehicles[new Random().Next(0, Vehicles.Count - 1)];
+                var randomVehicle = GetRandomVehicle();
 
                 randomVehicle.Capacity = randomVehicle.Capacity + 1;
             }
             finally
             {
-                _worker.Change(6000, Timeout.Infinite);
+                _worker.Change(7000, Timeout.Infinite);
             }
         }
 
-        void AddVehicle(string type)
+        private Vehicle GetRandomVehicle()
         {
-            var nameSpace = Assembly.GetExecutingAssembly().GetName().Name;
-            // happens that the assembly name and namespace for the type are the same - this may require amendment if the type moved / assembley renamed
-            SelectedVehicle = (Vehicle) Activator.CreateInstance(nameSpace, $"{nameSpace}.{type}").Unwrap();
+            lock (_sync)
+            {
+                return Vehicles[_random.Next(0, Vehicles.Count - 1)];
+            }
         }
 
-        async Task SaveVehicle(Vehicle vehicle)
+        private void AddVehicle(string type)
+        {
+            var nameSpace = Assembly.GetExecutingAssembly().GetName().Name;
+
+            SelectedVehicle = (Vehicle) Activator.CreateInstance(nameSpace, $"{nameSpace}.ViewModels.{type}").Unwrap();
+        }
+
+        private async Task SaveVehicle(Vehicle vehicle)
         {
             Working = true;
 
@@ -135,6 +139,14 @@ namespace WpfApplication3.ViewModels
                 Vehicles.Add(vehicle);
 
             Working = false;
+        }
+
+        private static bool CanSaveVehicle(Vehicle arg)
+        {
+            if (arg == null)
+                return false;
+
+            return !string.IsNullOrEmpty(arg.Make) && !string.IsNullOrEmpty(arg.Model);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
