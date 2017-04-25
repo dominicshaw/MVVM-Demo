@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:WpfApplication3.ViewModels"
         xmlns:controls="clr-namespace:WpfApplication3.Controls"
         mc:Ignorable="d"
         DataContext="{StaticResource MainViewModel}"
         Title="MainWindow" Height="350" Width="525">
-    
+
     <!--  d:DataContext="{d:DesignInstance viewModels:MainViewModel}" -->
 
     <Grid>
@@ -24,21 +23,29 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            
+
             <Button Margin="5,2" Grid.Row="0" Grid.Column="0" Content="Add Car" Command="{Binding AddVehicleCommand}" CommandParameter="Car" />
             <Button Margin="5,2" Grid.Row="0" Grid.Column="1" Content="Add Truck" Command="{Binding AddVehicleCommand}" CommandParameter="Truck" />
             <CheckBox Margin="5,2" Grid.Row="0" Grid.Column="2" Content="Background Threads?" IsChecked="{Binding BackgroundThreadUpdates}"></CheckBox>
 
-            <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" x:Name="grd" ItemsSource="{Binding Vehicles}" SelectedItem="{Binding SelectedVehicle, Mode=TwoWay}" />
+            <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" x:Name="grd" ItemsSource="{Binding Vehicles}" SelectedItem="{Binding SelectedVehicle, Mode=TwoWay}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="2*" />
+                    <DataGridTextColumn Binding="{Binding Make}" Header="Make" Width="3*" />
+                    <DataGridTextColumn Binding="{Binding Model}" Header="Model" Width="3*" />
+                    <DataGridTextColumn Binding="{Binding Capacity}" Header="Capacity" Width="2*" />
+                </DataGrid.Columns>
+            </DataGrid>
+            
             <controls:VehicleControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" DataContext="{Binding SelectedVehicle, Mode=TwoWay}" />
             <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding ElementName=grd, Path=SelectedItem}"></TextBlock>
         </Grid>
 
-        <Grid Visibility="{Binding Working, Converter={StaticResource BooleanVisibilityConverter}}">
+        <Grid Visibility="{Binding Source={StaticResource WorkingViewModel}, Path=Working, Converter={StaticResource BooleanVisibilityConverter}}">
             <Grid Background="Black" Opacity="0.4" />
             <controls:CircularProgressBar />
         </Grid>
     </Grid>
-    
-    
+
+
 </Window>

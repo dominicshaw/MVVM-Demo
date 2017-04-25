@@ -26,8 +26,8 @@
             </Grid.RowDefinitions>
             
             <ContentPresenter Grid.Row="0" Grid.Column="0" Content="{Binding}" />
-            
-            <Button Grid.Row="1" Grid.Column="0" Content="Save" Command="{Binding Source={StaticResource MainViewModel}, Path=SaveVehicleCommand}" CommandParameter="{Binding}" />
+
+            <Button Grid.Row="1" Grid.Column="0" Content="Save" Command="{Binding SaveVehicleCommand}" CommandParameter="{Binding Source={StaticResource MainViewModel}, Path=Vehicles}" />
         </Grid>
     </Grid>
 </UserControl>

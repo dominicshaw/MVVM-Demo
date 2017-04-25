@@ -7,6 +7,8 @@
     <Application.Resources>
         <viewModels:MainViewModel x:Key="MainViewModel" />
 
+        <x:StaticExtension Member="viewModels:WorkingViewModel.Instance" x:Key="WorkingViewModel"/>
+        
         <mvvm:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
         <mvvm:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
     </Application.Resources>

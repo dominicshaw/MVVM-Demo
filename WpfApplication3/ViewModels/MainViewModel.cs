@@ -20,7 +20,6 @@ namespace WpfApplication3.ViewModels
         private readonly Random _random = new Random();
         private readonly Timer _worker;
         private readonly Timer _dispatchedWorker;
-        private bool _working;
         private bool _backgroundThreadUpdates;
 
         private Vehicle _selectedVehicle;
@@ -28,7 +27,6 @@ namespace WpfApplication3.ViewModels
 
         public ObservableCollection<Vehicle> Vehicles { get; } = new ObservableCollection<Vehicle>();
 
-        public ICommand SaveVehicleCommand => new AsyncCommand<Vehicle>(SaveVehicle, CanSaveVehicle);
         public ICommand AddVehicleCommand => new DelegateCommand<string>(AddVehicle);
 
         public Vehicle SelectedVehicle
@@ -38,17 +36,6 @@ namespace WpfApplication3.ViewModels
             {
                 if (Equals(value, _selectedVehicle)) return;
                 _selectedVehicle = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool Working
-        {
-            get { return _working; }
-            set
-            {
-                if (value == _working) return;
-                _working = value;
                 OnPropertyChanged();
             }
         }
@@ -127,26 +114,6 @@ namespace WpfApplication3.ViewModels
             var nameSpace = Assembly.GetExecutingAssembly().GetName().Name;
 
             SelectedVehicle = (Vehicle) Activator.CreateInstance(nameSpace, $"{nameSpace}.ViewModels.{type}").Unwrap();
-        }
-
-        private async Task SaveVehicle(Vehicle vehicle)
-        {
-            Working = true;
-
-            await vehicle.Save();
-
-            if(!Vehicles.Contains(vehicle))
-                Vehicles.Add(vehicle);
-
-            Working = false;
-        }
-
-        private static bool CanSaveVehicle(Vehicle arg)
-        {
-            if (arg == null)
-                return false;
-
-            return !string.IsNullOrEmpty(arg.Make) && !string.IsNullOrEmpty(arg.Model);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

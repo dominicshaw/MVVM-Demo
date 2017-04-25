@@ -80,6 +80,7 @@
     <Compile Include="Controls\VehicleControl.xaml.cs">
       <DependentUpon>VehicleControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\WorkingViewModel.cs" />
     <Page Include="Controls\CarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

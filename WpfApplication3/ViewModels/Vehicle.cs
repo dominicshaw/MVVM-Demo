@@ -1,7 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WpfApplication3.Annotations;
+using WpfApplication3.MVVM;
 
 namespace WpfApplication3.ViewModels
 {
@@ -11,6 +14,8 @@ namespace WpfApplication3.ViewModels
         private string _make;
         private string _model;
         private int _capacity;
+
+        public ICommand SaveVehicleCommand => new AsyncCommand<ObservableCollection<Vehicle>>(SaveVehicle, CanSaveVehicle);
 
         public string Type
         {
@@ -59,6 +64,23 @@ namespace WpfApplication3.ViewModels
         protected Vehicle(string type)
         {
             Type = type;
+        }
+
+        private async Task SaveVehicle(ObservableCollection<Vehicle> vehicles)
+        {
+            WorkingViewModel.Instance.Working = true;
+
+            await Save();
+
+            if (!vehicles.Contains(this))
+                vehicles.Add(this);
+
+            WorkingViewModel.Instance.Working = false;
+        }
+
+        private bool CanSaveVehicle(ObservableCollection<Vehicle> vehicles)
+        {
+            return !string.IsNullOrEmpty(Make) && !string.IsNullOrEmpty(Model);
         }
 
         public virtual async Task<bool> Save()
