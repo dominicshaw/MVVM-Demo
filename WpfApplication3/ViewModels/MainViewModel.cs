@@ -50,7 +50,7 @@ namespace WpfApplication3.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public MainViewModel()
         {
             Vehicles.Add(new Car() { Capacity = 5, Make = "Fiat", Model = "Punto", TopSpeed = 70 });
@@ -115,7 +115,7 @@ namespace WpfApplication3.ViewModels
 
             SelectedVehicle = (Vehicle) Activator.CreateInstance(nameSpace, $"{nameSpace}.ViewModels.{type}").Unwrap();
         }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

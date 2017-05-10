@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WpfApplication3.Annotations;
 using WpfApplication3.MVVM;
@@ -16,6 +17,7 @@ namespace WpfApplication3.ViewModels
         private int _capacity;
 
         public ICommand SaveVehicleCommand => new AsyncCommand<ObservableCollection<Vehicle>>(SaveVehicle, CanSaveVehicle);
+        public ICommand TellMeMoreCommand => new DelegateCommand<Vehicle>(TellMeMore);
 
         public string Type
         {
@@ -88,6 +90,11 @@ namespace WpfApplication3.ViewModels
             // simulated slow database save
             await Task.Delay(250);
             return true;
+        }
+
+        private static void TellMeMore(Vehicle vehicle)
+        {
+            MessageBox.Show(string.Format("Vehicle: {0}", vehicle.GetType()));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
