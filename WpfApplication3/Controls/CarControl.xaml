@@ -6,7 +6,9 @@
              xmlns:viewModels="clr-namespace:WpfApplication3.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewModels:Car}">
+
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -18,8 +20,8 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Car Specific Content" FontSize="16" FontWeight="Bold" />
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="0,0,0,5">Car Specific Content</TextBlock>
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Make:" />
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Model:" />
@@ -30,5 +32,7 @@
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Model}" />
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Capacity}" />
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TopSpeed}" />
+
     </Grid>
+
 </UserControl>

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:WpfApplication3.ViewModels"
              xmlns:controls="clr-namespace:WpfApplication3.Controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewModels:Vehicle}">
     
@@ -18,16 +19,21 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
+
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
-            <ContentPresenter Grid.Row="0" Grid.Column="0" Content="{Binding}" />
 
-            <Button Grid.Row="1" Grid.Column="0" Content="Save" Command="{Binding SaveVehicleCommand}" CommandParameter="{Binding Source={StaticResource MainViewModel}, Path=Vehicles}" />
+            <materialDesign:Card Padding="10,10,10,20" Margin="5,10" Grid.Row="0" Grid.Column="0">
+                <ContentPresenter Content="{Binding}" />
+            </materialDesign:Card>
+
+            <Button Grid.Row="1" Grid.Column="0" Content="Save" Command="{Binding SaveVehicleCommand}" CommandParameter="{Binding Source={StaticResource MainViewModel}, Path=Vehicles}" Margin="20,0,20,20" />
+
         </Grid>
     </Grid>
+
 </UserControl>

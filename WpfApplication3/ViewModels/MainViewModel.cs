@@ -1,10 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -58,6 +58,8 @@ namespace WpfApplication3.ViewModels
             Vehicles.Add(new Car() { Capacity = 5, Make = "Ford", Model = "Fiesta", TopSpeed = 90});
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "BigTruck", WheelBase = "Large" });
             Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "SmallTruck", WheelBase = "Small" });
+
+            SelectedVehicle = Vehicles.First();
 
             _worker = new Timer(o => BackgroundChange(), null, 1000, Timeout.Infinite);
             _dispatchedWorker = new Timer(o => DispatchedChange(), null, 1000, Timeout.Infinite);

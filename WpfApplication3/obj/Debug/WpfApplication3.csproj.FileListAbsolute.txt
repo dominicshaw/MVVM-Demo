@@ -49,3 +49,7 @@ C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\o
 C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\bin\Debug\Jot.dll
 C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\bin\Debug\Newtonsoft.Json.dll
 C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\bin\Debug\Newtonsoft.Json.xml
+C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\bin\Debug\MaterialDesignColors.dll
+C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\Users\shaw_d\Documents\GitHub\MVVM-ContentPresenter-Example\WpfApplication3\bin\Debug\MaterialDesignThemes.Wpf.xml

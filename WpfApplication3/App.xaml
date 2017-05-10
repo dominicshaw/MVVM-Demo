@@ -4,12 +4,34 @@
              xmlns:viewModels="clr-namespace:WpfApplication3.ViewModels"
              xmlns:mvvm="clr-namespace:WpfApplication3.MVVM"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
-        <viewModels:MainViewModel x:Key="MainViewModel" />
-
-        <x:StaticExtension Member="viewModels:WorkingViewModel.Instance" x:Key="WorkingViewModel"/>
         
-        <mvvm:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
-        <mvvm:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+        <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <viewModels:MainViewModel x:Key="MainViewModel" />
+
+            <x:StaticExtension Member="viewModels:WorkingViewModel.Instance" x:Key="WorkingViewModel"/>
+
+            <mvvm:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
+            <mvvm:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
+
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="5,2" />
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="Margin" Value="5,2" />
+            </Style>
+
+        </ResourceDictionary>
+        
     </Application.Resources>
+    
 </Application>
