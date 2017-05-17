@@ -4,10 +4,10 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using WpfApplication3.Annotations;
-using WpfApplication3.MVVM;
+using DemoApplication.MVVM;
+using DemoApplication.Properties;
 
-namespace WpfApplication3.ViewModels
+namespace DemoApplication.ViewModels
 {
     public abstract class Vehicle : INotifyPropertyChanged
     {

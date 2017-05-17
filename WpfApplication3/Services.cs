@@ -3,7 +3,7 @@ using Jot;
 using Jot.Storage;
 using Jot.Triggers;
 
-namespace WpfApplication3
+namespace DemoApplication
 {
     static class Services
     {

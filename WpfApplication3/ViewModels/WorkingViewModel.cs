@@ -1,8 +1,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WpfApplication3.Annotations;
+using DemoApplication.Properties;
 
-namespace WpfApplication3.ViewModels
+namespace DemoApplication.ViewModels
 {
     public class WorkingViewModel : INotifyPropertyChanged
     {

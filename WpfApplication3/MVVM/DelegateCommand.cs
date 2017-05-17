@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace WpfApplication3.MVVM
+namespace DemoApplication.MVVM
 {
     public interface IRaiseCanExecuteChanged
     {

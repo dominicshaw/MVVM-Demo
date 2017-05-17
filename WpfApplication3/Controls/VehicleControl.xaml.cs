@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace WpfApplication3.Controls
+namespace DemoApplication.Controls
 {
     /// <summary>
     /// Interaction logic for VehicleControl.xaml

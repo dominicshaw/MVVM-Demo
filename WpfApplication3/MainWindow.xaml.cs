@@ -1,4 +1,4 @@
-﻿namespace WpfApplication3
+﻿namespace DemoApplication
 {
     public partial class MainWindow
     {

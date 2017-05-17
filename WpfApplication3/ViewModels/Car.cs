@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WpfApplication3.ViewModels
+namespace DemoApplication.ViewModels
 {
     public class Car : Vehicle
     {

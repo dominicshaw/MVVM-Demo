@@ -4,25 +4,17 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
-using WpfApplication3.Annotations;
-using WpfApplication3.MVVM;
+using DemoApplication.MVVM;
+using DemoApplication.Properties;
 
-namespace WpfApplication3.ViewModels
+namespace DemoApplication.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         #region " background variables "
-        private readonly object _sync = new object();
-        private readonly Random _random = new Random();
-        private readonly Timer _worker;
-        private readonly Timer _dispatchedWorker;
-        private bool _backgroundThreadUpdates;
-
         private Vehicle _selectedVehicle;
+        private readonly BackgroundEmulator _backgroundWorker;
         #endregion
 
         public ObservableCollection<Vehicle> Vehicles { get; } = new ObservableCollection<Vehicle>();
@@ -42,11 +34,11 @@ namespace WpfApplication3.ViewModels
 
         public bool BackgroundThreadUpdates
         {
-            get { return _backgroundThreadUpdates; }
+            get { return _backgroundWorker.BackgroundThreadUpdates; }
             set
             {
-                if (value == _backgroundThreadUpdates) return;
-                _backgroundThreadUpdates = value;
+                if (value == _backgroundWorker.BackgroundThreadUpdates) return;
+                _backgroundWorker.BackgroundThreadUpdates = value;
                 OnPropertyChanged();
             }
         }
@@ -61,54 +53,7 @@ namespace WpfApplication3.ViewModels
 
             SelectedVehicle = Vehicles.First();
 
-            _worker = new Timer(o => BackgroundChange(), null, 1000, Timeout.Infinite);
-            _dispatchedWorker = new Timer(o => DispatchedChange(), null, 1000, Timeout.Infinite);
-        }
-
-        private void DispatchedChange()
-        {
-            try
-            {
-                if (!BackgroundThreadUpdates)
-                    return;
-
-                var randomVehicle = GetRandomVehicle();
-
-                Application.Current.Dispatcher.BeginInvoke(
-                    new Action(() =>
-                    {
-                        randomVehicle.Make = randomVehicle.Make + "x";
-                    }), DispatcherPriority.Normal);
-            }
-            finally
-            {
-                _dispatchedWorker.Change(6000, Timeout.Infinite);
-            }
-        }
-
-        private void BackgroundChange()
-        {
-            try
-            {
-                if (!BackgroundThreadUpdates)
-                    return;
-
-                var randomVehicle = GetRandomVehicle();
-
-                randomVehicle.Capacity = randomVehicle.Capacity + 1;
-            }
-            finally
-            {
-                _worker.Change(7000, Timeout.Infinite);
-            }
-        }
-
-        private Vehicle GetRandomVehicle()
-        {
-            lock (_sync)
-            {
-                return Vehicles[_random.Next(0, Vehicles.Count - 1)];
-            }
+            _backgroundWorker = new BackgroundEmulator(Vehicles);
         }
 
         private void AddVehicle(string type)
