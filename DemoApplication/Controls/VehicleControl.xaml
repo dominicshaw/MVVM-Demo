@@ -4,17 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:viewModels="clr-namespace:DemoApplication.ViewModels"
+             xmlns:vms="clr-namespace:DemoApplication.ViewModels"
              xmlns:controls="clr-namespace:DemoApplication.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewModels:Vehicle}">
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance vms:VehicleViewModel}">
     
     <UserControl.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type viewModels:Car}">
+            <DataTemplate DataType="{x:Type vms:CarViewModel}">
                 <controls:CarControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:Truck}">
+            <DataTemplate DataType="{x:Type vms:TruckViewModel}">
                 <controls:TruckControl />
             </DataTemplate>
         </ResourceDictionary>
@@ -31,7 +31,7 @@
                 <ContentPresenter Content="{Binding}" />
             </materialDesign:Card>
 
-            <Button Grid.Row="1" Grid.Column="0" Content="Save" Command="{Binding SaveVehicleCommand}" CommandParameter="{Binding Source={StaticResource MainViewModel}, Path=Vehicles}" Margin="20,0,20,20" />
+            <Button Grid.Row="1" Grid.Column="0" Content="Save" Command="{Binding SaveVehicleCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Vehicles}" Margin="20,0,20,20" />
 
         </Grid>
     </Grid>

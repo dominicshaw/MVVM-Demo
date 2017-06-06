@@ -1,11 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace DemoApplication.Controls
+﻿namespace DemoApplication.Controls
 {
-    /// <summary>
-    /// Interaction logic for VehicleControl.xaml
-    /// </summary>
-    public partial class VehicleControl : UserControl
+    public partial class VehicleControl
     {
         public VehicleControl()
         {

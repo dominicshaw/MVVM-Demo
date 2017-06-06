@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using DemoApplication.Models;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
 
@@ -13,15 +15,19 @@ namespace DemoApplication.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         #region " background variables "
-        private Vehicle _selectedVehicle;
-        private readonly BackgroundEmulator _backgroundWorker;
+        private VehicleViewModel _selectedVehicle;
+        private readonly BackgroundEmulator _dispatchedWorker;
+        private readonly BackgroundEmulator _undispatchedWorker;
+        private bool _backgroundThreadUpdates;
         #endregion
 
-        public ObservableCollection<Vehicle> Vehicles { get; } = new ObservableCollection<Vehicle>();
+        private readonly Repository _repository = new Repository();
+
+        public ObservableCollection<VehicleViewModel> Vehicles { get; } = new ObservableCollection<VehicleViewModel>();
 
         public ICommand AddVehicleCommand => new DelegateCommand<string>(AddVehicle);
 
-        public Vehicle SelectedVehicle
+        public VehicleViewModel SelectedVehicle
         {
             get { return _selectedVehicle; }
             set
@@ -34,33 +40,50 @@ namespace DemoApplication.ViewModels
 
         public bool BackgroundThreadUpdates
         {
-            get { return _backgroundWorker.BackgroundThreadUpdates; }
+            get { return _backgroundThreadUpdates; }
             set
             {
-                if (value == _backgroundWorker.BackgroundThreadUpdates) return;
-                _backgroundWorker.BackgroundThreadUpdates = value;
+                if (value == _backgroundThreadUpdates) return;
+
+                _backgroundThreadUpdates = value;
+
+                _dispatchedWorker.BackgroundThreadUpdates = value;
+                _undispatchedWorker.BackgroundThreadUpdates = value;
+
                 OnPropertyChanged();
             }
         }
 
         public MainViewModel()
         {
-            Vehicles.Add(new Car() { Capacity = 5, Make = "Fiat", Model = "Punto", TopSpeed = 70 });
-            Vehicles.Add(new Car() { Capacity = 4, Make = "Renault", Model = "Megane", TopSpeed = 80 });
-            Vehicles.Add(new Car() { Capacity = 5, Make = "Ford", Model = "Fiesta", TopSpeed = 90});
-            Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "BigTruck", WheelBase = "Large" });
-            Vehicles.Add(new Truck() { Capacity = 3, Make = "Volvo", Model = "SmallTruck", WheelBase = "Small" });
+            _dispatchedWorker   = new DispatchedBackgroundEmulator(Vehicles);
+            _undispatchedWorker = new UndispatchedBackgroundEmulator(Vehicles);
+        }
+        
+        public async Task Load()
+        {
+            try
+            {
+                WorkingViewModel.Instance.Working = true;
 
-            SelectedVehicle = Vehicles.First();
+                await _repository.Load();
 
-            _backgroundWorker = new BackgroundEmulator(Vehicles);
+                foreach (var v in _repository.Vehicles)
+                    Vehicles.Add(VehicleFactory.Create(v));
+
+                SelectedVehicle = Vehicles.First();
+            }
+            finally
+            {
+                WorkingViewModel.Instance.Working = false;
+            }
         }
 
         private void AddVehicle(string type)
         {
             var nameSpace = Assembly.GetExecutingAssembly().GetName().Name;
 
-            SelectedVehicle = (Vehicle) Activator.CreateInstance(nameSpace, $"{nameSpace}.ViewModels.{type}").Unwrap();
+            SelectedVehicle = (VehicleViewModel) Activator.CreateInstance(nameSpace, $"{nameSpace}.ViewModels.{type}").Unwrap();
         }
         
         public event PropertyChangedEventHandler PropertyChanged;

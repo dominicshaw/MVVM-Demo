@@ -1,8 +1,9 @@
 using System.Threading.Tasks;
+using DemoApplication.Models;
 
 namespace DemoApplication.ViewModels
 {
-    public class Car : Vehicle
+    public class CarViewModel : VehicleViewModel
     {
         private decimal _topSpeed;
 
@@ -16,14 +17,16 @@ namespace DemoApplication.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public Car() : base("Car")
+        
+        public CarViewModel(Car car) : base(car)
         {
-
+            TopSpeed = car.TopSpeed;
         }
 
         public override async Task<bool> Save()
         {
+            ((Car) _vehicle).TopSpeed = TopSpeed;
+
             // save base class
             var success = await base.Save();
 

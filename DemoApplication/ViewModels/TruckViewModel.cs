@@ -1,8 +1,9 @@
 using System.Threading.Tasks;
+using DemoApplication.Models;
 
 namespace DemoApplication.ViewModels
 {
-    public class Truck : Vehicle
+    public class TruckViewModel : VehicleViewModel
     {
         private string _wheelBase;
 
@@ -17,13 +18,15 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public Truck() : base("Truck")
+        public TruckViewModel(Truck truck) : base(truck)
         {
-
+            WheelBase = truck.WheelBase;
         }
 
         public override async Task<bool> Save()
         {
+            ((Truck) _vehicle).WheelBase = WheelBase;
+
             // save base class
             var success = await base.Save();
 

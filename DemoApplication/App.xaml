@@ -16,8 +16,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
-            <viewModels:MainViewModel x:Key="MainViewModel" />
-
             <x:StaticExtension Member="viewModels:WorkingViewModel.Instance" x:Key="WorkingViewModel"/>
 
             <mvvm:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
