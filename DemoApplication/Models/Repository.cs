@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using SQLite;
 
@@ -22,24 +23,26 @@ namespace DemoApplication.Models
             
             await _db.CreateTableAsync<Truck>();
             await _db.CreateTableAsync<Car>();
-
+            
             await PopulateIfEmpty();
 
-            foreach (var c in await _db.Table<Car>().ToListAsync())
-                Vehicles.Add(c);
-            foreach (var c in await _db.Table<Truck>().ToListAsync())
-                Vehicles.Add(c);
+            foreach (var v in await _db.Table<Car>().ToListAsync())
+                Vehicles.Add(v);
+            foreach (var v in await _db.Table<Truck>().ToListAsync())
+                Vehicles.Add(v);
         }
 
         private async Task PopulateIfEmpty()
         {
-            if ((await _db.QueryAsync<int>("SELECT COUNT(*) FROM Car")).Count == 0)
+            var counter = await _db.QueryAsync<ScalarInteger>("SELECT COUNT(*) As Result FROM Car");
+
+            if (counter[0].Result == 0)
             {
                 await _db.InsertAsync(new Car   { Capacity = 5, Make = "Fiat"   , Model = "Punto"     , TopSpeed  = 70      });
                 await _db.InsertAsync(new Car   { Capacity = 4, Make = "Renault", Model = "Megane"    , TopSpeed  = 80      });
                 await _db.InsertAsync(new Car   { Capacity = 5, Make = "Ford"   , Model = "Fiesta"    , TopSpeed  = 90      });
-                await _db.InsertAsync(new Truck { Capacity = 3, Make = "Volvo"  , Model = "BigTruck"  , WheelBase = "Large" });
-                await _db.InsertAsync(new Truck { Capacity = 3, Make = "Volvo"  , Model = "SmallTruck", WheelBase = "Small" });
+                await _db.InsertAsync(new Truck { Capacity = 3, Make = "Volvo"  , Model = "FMX"       , WheelBase = "Large" });
+                await _db.InsertAsync(new Truck { Capacity = 3, Make = "Volvo"  , Model = "VHD"       , WheelBase = "Small" });
             }
         }
 
@@ -50,5 +53,10 @@ namespace DemoApplication.Models
             if (!Vehicles.Contains(vehicle))
                 Vehicles.Add(vehicle);
         }
+    }
+
+    public class ScalarInteger
+    {
+        public int Result { get; set; }
     }
 }
