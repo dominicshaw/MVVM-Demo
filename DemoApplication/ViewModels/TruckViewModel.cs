@@ -1,11 +1,17 @@
-using System.Threading.Tasks;
 using DemoApplication.Models;
 
 namespace DemoApplication.ViewModels
 {
-    public class TruckViewModel : VehicleViewModel
+    public sealed class TruckViewModel : VehicleViewModel
     {
         private string _wheelBase;
+        private Truck _vehicle;
+        
+        protected override Vehicle Vehicle
+        {
+            get { return _vehicle; }
+            set { _vehicle = (Truck) value; }
+        }
 
         public string WheelBase
         {
@@ -18,22 +24,16 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public TruckViewModel(Truck truck) : base(truck)
+        public TruckViewModel(Truck truck)
         {
+            Load(truck);
             WheelBase = truck.WheelBase;
         }
 
-        public override async Task<bool> Save()
+        public override void Commit()
         {
-            ((Truck) _vehicle).WheelBase = WheelBase;
-
-            // save base class
-            var success = await base.Save();
-
-            if (success)
-                await Task.Delay(250); // simulated save of truck specific code
-
-            return true;
+            base.Commit();
+            _vehicle.WheelBase = WheelBase;
         }
     }
 }

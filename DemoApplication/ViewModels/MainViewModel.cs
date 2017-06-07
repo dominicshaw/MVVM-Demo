@@ -1,8 +1,6 @@
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -81,9 +79,7 @@ namespace DemoApplication.ViewModels
 
         private void AddVehicle(string type)
         {
-            var nameSpace = Assembly.GetExecutingAssembly().GetName().Name;
-
-            SelectedVehicle = (VehicleViewModel) Activator.CreateInstance(nameSpace, $"{nameSpace}.ViewModels.{type}").Unwrap();
+            SelectedVehicle = VehicleFactory.Create(type, _repository);
         }
         
         public event PropertyChangedEventHandler PropertyChanged;

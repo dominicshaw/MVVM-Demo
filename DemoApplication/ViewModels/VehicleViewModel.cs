@@ -12,7 +12,7 @@ namespace DemoApplication.ViewModels
 {
     public abstract class VehicleViewModel : INotifyPropertyChanged
     {
-        protected readonly Vehicle _vehicle;
+        protected abstract Vehicle Vehicle { get; set; }
 
         private string _type;
         private string _make;
@@ -66,21 +66,22 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        protected VehicleViewModel(Vehicle vehicle)
+        protected virtual void Load(Vehicle vehicle)
         {
-            _vehicle = vehicle;
+            Vehicle = vehicle;
 
-            Type     = _vehicle.Type;
-            Make     = _vehicle.Make;
-            Model    = _vehicle.Model;
-            Capacity = _vehicle.Capacity;
+            Type = Vehicle.Type;
+            Make = Vehicle.Make;
+            Model = Vehicle.Model;
+            Capacity = Vehicle.Capacity;
         }
 
         private async Task SaveVehicle(ObservableCollection<VehicleViewModel> vehicles)
         {
             WorkingViewModel.Instance.Working = true;
 
-            await Save();
+            Commit();
+            await Vehicle.Save();
 
             if (!vehicles.Contains(this))
                 vehicles.Add(this);
@@ -93,18 +94,14 @@ namespace DemoApplication.ViewModels
             return !string.IsNullOrEmpty(Make) && !string.IsNullOrEmpty(Model);
         }
 
-        public virtual async Task<bool> Save()
+        public virtual void Commit()
         {
-            await Task.Delay(250);
-
-            _vehicle.Type     = Type;
-            _vehicle.Make     = Make;
-            _vehicle.Model    = Model;
-            _vehicle.Capacity = Capacity;
-
-            return true;
+            Vehicle.Type     = Type;
+            Vehicle.Make     = Make;
+            Vehicle.Model    = Model;
+            Vehicle.Capacity = Capacity;
         }
-
+        
         private static void TellMeMore(VehicleViewModel vehicle)
         {
             MessageBox.Show(string.Format("Vehicle: {0}", vehicle.GetType()));

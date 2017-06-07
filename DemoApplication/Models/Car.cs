@@ -4,6 +4,7 @@
     {
         public decimal TopSpeed { get; set; }
 
-        public Car() : base("Car") { }
+        public Car() : base(null, "Car") { }
+        public Car(Repository repository) : base(repository, "Car") { }
     }
 }
