@@ -103,20 +103,20 @@
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="MVVM\AsyncCommand.cs" />
     <Compile Include="Services.cs" />
-    <Compile Include="ViewModels\BackgroundEmulator.cs" />
+    <Compile Include="Emulators\BackgroundEmulator.cs" />
     <Compile Include="ViewModels\CarViewModel.cs" />
     <Compile Include="Controls\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\Converters.cs" />
     <Compile Include="MVVM\DelegateCommand.cs" />
-    <Compile Include="ViewModels\DispatchedBackgroundEmulator.cs" />
+    <Compile Include="Emulators\Dispatched.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\TruckViewModel.cs" />
     <Compile Include="Controls\TruckControl.xaml.cs">
       <DependentUpon>TruckControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\UndispatchedBackgroundEmulator.cs" />
+    <Compile Include="Emulators\Undispatched.cs" />
     <Compile Include="ViewModels\VehicleFactory.cs" />
     <Compile Include="ViewModels\VehicleViewModel.cs" />
     <Compile Include="Controls\VehicleControl.xaml.cs">

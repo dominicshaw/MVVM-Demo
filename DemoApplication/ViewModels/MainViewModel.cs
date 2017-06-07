@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DemoApplication.Emulators;
 using DemoApplication.Models;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
@@ -54,8 +55,8 @@ namespace DemoApplication.ViewModels
 
         public MainViewModel()
         {
-            _dispatchedWorker   = new DispatchedBackgroundEmulator(Vehicles);
-            _undispatchedWorker = new UndispatchedBackgroundEmulator(Vehicles);
+            _dispatchedWorker   = new Dispatched(Vehicles);
+            _undispatchedWorker = new Undispatched(Vehicles);
         }
         
         public async Task Load()
@@ -81,7 +82,8 @@ namespace DemoApplication.ViewModels
         {
             SelectedVehicle = VehicleFactory.Create(type, _repository);
         }
-        
+
+        #region " inpc "
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -89,5 +91,6 @@ namespace DemoApplication.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
     }
 }

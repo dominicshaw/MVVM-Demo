@@ -1,12 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
+using DemoApplication.ViewModels;
 
-namespace DemoApplication.ViewModels
+namespace DemoApplication.Emulators
 {
-    public class DispatchedBackgroundEmulator : BackgroundEmulator
+    public class Dispatched : BackgroundEmulator
     {
-        public DispatchedBackgroundEmulator(ObservableCollection<VehicleViewModel> vehicles) : base(vehicles)
+        public Dispatched(ObservableCollection<VehicleViewModel> vehicles) : base(vehicles)
         {
         }
 

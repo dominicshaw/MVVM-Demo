@@ -1,8 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
+using DemoApplication.ViewModels;
 
-namespace DemoApplication.ViewModels
+namespace DemoApplication.Emulators
 {
     public abstract class BackgroundEmulator
     {

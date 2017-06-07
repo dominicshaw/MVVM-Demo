@@ -3,12 +3,13 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using DemoApplication.ViewModels;
 
-namespace DemoApplication.ViewModels
+namespace DemoApplication.Emulators
 {
-    public class UndispatchedBackgroundEmulator : BackgroundEmulator
+    public class Undispatched : BackgroundEmulator
     {
-        public UndispatchedBackgroundEmulator(ObservableCollection<VehicleViewModel> vehicles) : base(vehicles)
+        public Undispatched(ObservableCollection<VehicleViewModel> vehicles) : base(vehicles)
         {
         }
 
