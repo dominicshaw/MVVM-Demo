@@ -1,5 +1,5 @@
-# MVVM-ContentPresenter-Example
-MVVM ContentPresenter / DataTemplate Example
+# MVVM-Demo
+MVVM &amp; Other Concepts Examples
 
 Very simple demo project playing with various MVVM concepts and nuget packages.
 
