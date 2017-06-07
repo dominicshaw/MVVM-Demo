@@ -48,10 +48,10 @@ namespace DemoApplication.Models
 
         public async Task Save(Vehicle vehicle)
         {
-            await _db.InsertAsync(vehicle);
-
             if (!Vehicles.Contains(vehicle))
                 Vehicles.Add(vehicle);
+
+            await _db.InsertAsync(vehicle);
         }
     }
 
