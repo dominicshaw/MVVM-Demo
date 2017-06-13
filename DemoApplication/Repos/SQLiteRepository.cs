@@ -2,16 +2,23 @@
 using System.IO;
 using System.Threading.Tasks;
 using DemoApplication.Models;
+using log4net;
 using SQLite;
 
 namespace DemoApplication.Repos
 {
-    public class LiveRepository : IRepository
+    public class SQLiteRepository : IRepository
     {
         private SQLiteAsyncConnection _db;
+        private readonly ILog _log;
 
         public List<Vehicle> Vehicles { get; } = new List<Vehicle>();
-        
+
+        public SQLiteRepository(ILog log)
+        {
+            _log = log;
+        }
+
         public async Task Load()
         {
             var dir = Path.Combine(Path.GetTempPath(), "Vehicles");
@@ -30,6 +37,8 @@ namespace DemoApplication.Repos
                 Vehicles.Add(v);
             foreach (var v in await _db.Table<Truck>().ToListAsync())
                 Vehicles.Add(v);
+
+            _log.Info($"Loaded {Vehicles.Count} vehicles from database.");
         }
 
         private async Task PopulateIfEmpty()
@@ -38,6 +47,8 @@ namespace DemoApplication.Repos
 
             if (counter == 0)
             {
+                _log.Info("No database exists; creating database with sample data...");
+
                 await _db.InsertAsync(new Car   { Capacity = 5, Make = "Fiat"   , Model = "Punto"     , TopSpeed  = 70      });
                 await _db.InsertAsync(new Car   { Capacity = 4, Make = "Renault", Model = "Megane"    , TopSpeed  = 80      });
                 await _db.InsertAsync(new Car   { Capacity = 5, Make = "Ford"   , Model = "Fiesta"    , TopSpeed  = 90      });

@@ -7,6 +7,6 @@ namespace DemoApplication.Models
         public string WheelBase { get; set; }
 
         public Truck() : base(null, "Truck") { }
-        public Truck(LiveRepository repository) : base(repository, "Truck") { }
+        public Truck(SQLiteRepository repository) : base(repository, "Truck") { }
     }
 }

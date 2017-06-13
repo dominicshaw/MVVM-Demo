@@ -7,6 +7,6 @@ namespace DemoApplication.Models
         public decimal TopSpeed { get; set; }
 
         public Car() : base(null, "Car") { }
-        public Car(LiveRepository repository) : base(repository, "Car") { }
+        public Car(SQLiteRepository repository) : base(repository, "Car") { }
     }
 }

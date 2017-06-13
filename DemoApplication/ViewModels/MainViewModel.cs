@@ -8,6 +8,7 @@ using DemoApplication.Emulators;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
 using DemoApplication.Repos;
+using log4net;
 
 namespace DemoApplication.ViewModels
 {
@@ -21,6 +22,7 @@ namespace DemoApplication.ViewModels
         #endregion
 
         private readonly IRepository _repository;
+        private readonly ILog _log;
         private readonly VehicleFactory _vehicleFactory;
 
         public ObservableCollection<VehicleViewModel> Vehicles { get; } = new ObservableCollection<VehicleViewModel>();
@@ -54,13 +56,16 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public MainViewModel(IRepository repository, VehicleFactory vehicleFactory)
+        public MainViewModel(IRepository repository, ILog log, VehicleFactory vehicleFactory)
         {
             _repository = repository;
+            _log = log;
             _vehicleFactory = vehicleFactory;
 
             _dispatchedWorker   = new Dispatched(Vehicles);
             _undispatchedWorker = new Undispatched(Vehicles);
+
+            _log.Info("Main View Model initialised.");
         }
         
         public async Task Load()

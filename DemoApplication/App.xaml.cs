@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using DemoApplication.Repos;
+using log4net;
 using Ninject;
 
 namespace DemoApplication
@@ -12,16 +14,24 @@ namespace DemoApplication
         {
             base.OnStartup(e);
 
-            _kernel.Bind<IRepository>().To<LiveRepository>().InSingletonScope();
-
+            _kernel.Bind<ILog>().ToMethod(context => LogManager.GetLogger(context.Request.Target.Member.DeclaringType.FullName));
+            _kernel.Bind<IRepository>().To<SQLiteRepository>().InSingletonScope();
+            
+            InitialiseLogs();
             Start();
         }
 
         private void Start()
         {
             MainWindow = _kernel.Get<MainWindow>();
+
             MainWindow.Show();
             MainWindow.Focus();
+        }
+
+        private static void InitialiseLogs()
+        {
+            GlobalContext.Properties["username"] = Environment.UserName;
         }
 
         protected override void OnExit(ExitEventArgs e)

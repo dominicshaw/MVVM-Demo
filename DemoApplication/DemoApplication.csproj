@@ -44,6 +44,9 @@
       <HintPath>..\packages\Jot.1.2.7\lib\Jot.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -102,7 +105,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\Car.cs" />
     <Compile Include="Repos\IRepository.cs" />
-    <Compile Include="Repos\LiveRepository.cs" />
+    <Compile Include="Repos\SQLiteRepository.cs" />
     <Compile Include="Repos\TestRepository.cs" />
     <Compile Include="Models\Truck.cs" />
     <Compile Include="Models\Vehicle.cs" />

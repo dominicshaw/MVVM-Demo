@@ -27,7 +27,7 @@ namespace DemoApplication.ViewModels
             if (truck != null)
                 return new TruckViewModel(truck);
 
-            throw new ArgumentException($"Vehicle is not valid type; \'{v.GetType()}\'.");
+            throw new ArgumentException($"Vehicle is not valid type; '{v.GetType()}'.");
         }
 
         public VehicleViewModel Create(string type)
