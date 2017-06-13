@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using SQLite;
 
@@ -34,9 +33,9 @@ namespace DemoApplication.Models
 
         private async Task PopulateIfEmpty()
         {
-            var counter = await _db.QueryAsync<ScalarInteger>("SELECT COUNT(*) As Result FROM Car");
+            var counter = await _db.ExecuteScalarAsync<int>("SELECT COUNT(*) As Result FROM Car");
 
-            if (counter[0].Result == 0)
+            if (counter == 0)
             {
                 await _db.InsertAsync(new Car   { Capacity = 5, Make = "Fiat"   , Model = "Punto"     , TopSpeed  = 70      });
                 await _db.InsertAsync(new Car   { Capacity = 4, Make = "Renault", Model = "Megane"    , TopSpeed  = 80      });
@@ -53,10 +52,5 @@ namespace DemoApplication.Models
 
             await _db.InsertAsync(vehicle);
         }
-    }
-
-    public class ScalarInteger
-    {
-        public int Result { get; set; }
     }
 }
