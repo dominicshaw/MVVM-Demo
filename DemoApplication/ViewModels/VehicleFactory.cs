@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Reflection;
 using DemoApplication.Models;
+using DemoApplication.Repos;
 
 namespace DemoApplication.ViewModels
 {
-    public static class VehicleFactory
+    public class VehicleFactory
     {
-        public static VehicleViewModel Create(Vehicle v)
+        private readonly IRepository _repository;
+
+        public VehicleFactory(IRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public VehicleViewModel Create(Vehicle v)
         {
             if (v == null)
                 throw new ArgumentNullException(nameof(v));
@@ -22,10 +30,11 @@ namespace DemoApplication.ViewModels
             throw new ArgumentException($"Vehicle is not valid type; \'{v.GetType()}\'.");
         }
 
-        public static VehicleViewModel Create(string type, Repository repository)
+        public VehicleViewModel Create(string type)
         {
+            // I wouldn't normally use reflection because it is so slow; this is just a play with Activator.
             var nameSpace = Assembly.GetExecutingAssembly().GetName().Name;
-            var model = (Vehicle) Activator.CreateInstance(nameSpace, $"{nameSpace}.Models.{type}", false, BindingFlags.Instance | BindingFlags.Public | BindingFlags.CreateInstance, null, new object[] { repository }, null, null).Unwrap();
+            var model = (Vehicle) Activator.CreateInstance(nameSpace, $"{nameSpace}.Models.{type}", false, BindingFlags.Instance | BindingFlags.Public | BindingFlags.CreateInstance, null, new object[] { _repository }, null, null).Unwrap();
             return Create(model);
         }
     }

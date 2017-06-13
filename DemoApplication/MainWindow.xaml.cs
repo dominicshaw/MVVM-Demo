@@ -6,7 +6,7 @@ namespace DemoApplication
     {
         private readonly MainViewModel _model;
 
-        public MainWindow()
+        public MainWindow(MainViewModel model)
         {
             InitializeComponent();
 
@@ -16,7 +16,7 @@ namespace DemoApplication
                 .RegisterPersistTrigger(nameof(Closed))
                 .Apply();
 
-            _model = new MainViewModel();
+            _model = model;
             DataContext = _model;
 
             Loaded += MainWindow_Loaded;

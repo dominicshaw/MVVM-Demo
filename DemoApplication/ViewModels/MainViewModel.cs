@@ -5,9 +5,9 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DemoApplication.Emulators;
-using DemoApplication.Models;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
+using DemoApplication.Repos;
 
 namespace DemoApplication.ViewModels
 {
@@ -20,7 +20,8 @@ namespace DemoApplication.ViewModels
         private bool _backgroundThreadUpdates;
         #endregion
 
-        private readonly Repository _repository = new Repository();
+        private readonly IRepository _repository;
+        private readonly VehicleFactory _vehicleFactory;
 
         public ObservableCollection<VehicleViewModel> Vehicles { get; } = new ObservableCollection<VehicleViewModel>();
 
@@ -53,8 +54,11 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public MainViewModel()
+        public MainViewModel(IRepository repository, VehicleFactory vehicleFactory)
         {
+            _repository = repository;
+            _vehicleFactory = vehicleFactory;
+
             _dispatchedWorker   = new Dispatched(Vehicles);
             _undispatchedWorker = new Undispatched(Vehicles);
         }
@@ -68,7 +72,7 @@ namespace DemoApplication.ViewModels
                 await _repository.Load();
 
                 foreach (var v in _repository.Vehicles)
-                    Vehicles.Add(VehicleFactory.Create(v));
+                    Vehicles.Add(_vehicleFactory.Create(v));
 
                 SelectedVehicle = Vehicles.First();
             }
@@ -80,7 +84,7 @@ namespace DemoApplication.ViewModels
 
         private void AddVehicle(string type)
         {
-            SelectedVehicle = VehicleFactory.Create(type, _repository);
+            SelectedVehicle = _vehicleFactory.Create(type);
         }
 
         #region " inpc "

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using DemoApplication.Models;
 using SQLite;
 
-namespace DemoApplication.Models
+namespace DemoApplication.Repos
 {
-    public class Repository
+    public class LiveRepository : IRepository
     {
         private SQLiteAsyncConnection _db;
 
