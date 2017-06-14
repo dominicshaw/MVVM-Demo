@@ -1,21 +1,22 @@
 ﻿using DemoApplication.Models;
 using DemoApplication.ViewModels;
 using Ninject;
+using Ninject.Syntax;
 
 namespace DemoApplication.Factories
 {
     public class VehicleViewModelFactory
     {
-        private readonly IKernel _kernel;
+        private readonly IResolutionRoot _serviceLocator;
 
-        public VehicleViewModelFactory(IKernel kernel)
+        public VehicleViewModelFactory(IResolutionRoot serviceLocator)
         {
-            _kernel = kernel;
+            _serviceLocator = serviceLocator;
         }
 
         public VehicleViewModel Create(Vehicle v)
         {
-            var vvm = _kernel.Get<VehicleViewModel>(v.Type);
+            var vvm = _serviceLocator.Get<VehicleViewModel>(v.Type);
             vvm.Load(v);
 
             return vvm;
@@ -23,7 +24,7 @@ namespace DemoApplication.Factories
 
         public VehicleViewModel Create(string type)
         {
-            return _kernel.Get<VehicleViewModel>(type);
+            return _serviceLocator.Get<VehicleViewModel>(type);
         }
     }
 }

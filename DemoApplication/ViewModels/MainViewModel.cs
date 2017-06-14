@@ -22,8 +22,8 @@ namespace DemoApplication.ViewModels
         private bool _backgroundThreadUpdates;
         #endregion
 
-        private readonly IRepository _repository;
         private readonly ILog _log;
+        private readonly IRepository _repository;
         private readonly VehicleViewModelFactory _vehicleFactory;
 
         public ObservableCollection<VehicleViewModel> Vehicles { get; } = new ObservableCollection<VehicleViewModel>();
@@ -57,10 +57,10 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public MainViewModel(IRepository repository, ILog log, VehicleViewModelFactory vehicleFactory)
+        public MainViewModel(ILog log, IRepository repository, VehicleViewModelFactory vehicleFactory)
         {
-            _repository = repository;
             _log = log;
+            _repository = repository;
             _vehicleFactory = vehicleFactory;
 
             _dispatchedWorker   = new Dispatched(Vehicles);

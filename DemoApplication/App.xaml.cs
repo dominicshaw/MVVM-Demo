@@ -15,7 +15,7 @@ namespace DemoApplication
         {
             base.OnStartup(e);
 
-            _kernel.Bind<ILog>().ToMethod(context => LogManager.GetLogger(context.Request.Target.Member.DeclaringType.FullName));
+            _kernel.Bind<ILog>().ToMethod(context => LogManager.GetLogger(context.Request.Target?.Member.DeclaringType?.FullName));
             _kernel.Bind<IRepository>().To<SQLiteRepository>().InSingletonScope();
 
             _kernel.Bind<VehicleViewModel>().To<CarViewModel>().Named("Car");

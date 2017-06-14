@@ -73,10 +73,7 @@ namespace DemoApplication.Repos
             if (!Vehicles.Contains(vehicle))
                 Vehicles.Add(vehicle);
 
-            if (vehicle is Car)
-                await _db.InsertAsync(vehicle as Car);
-            else if (vehicle is Truck)
-                await _db.InsertAsync(vehicle as Truck);
+            await _db.InsertOrReplaceAsync(vehicle);
         }
     }
 }

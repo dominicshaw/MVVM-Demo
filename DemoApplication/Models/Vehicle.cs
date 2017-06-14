@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DemoApplication.Repos;
+using SQLite;
 
 namespace DemoApplication.Models
 {
     public abstract class Vehicle
     {
         private IRepository _repository;
+
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }
 
         public string Type { get; set; }
         public string Make { get; set; }
