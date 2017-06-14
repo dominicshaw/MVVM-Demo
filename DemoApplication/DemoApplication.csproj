@@ -125,7 +125,7 @@
       <DependentUpon>TruckControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Emulators\Undispatched.cs" />
-    <Compile Include="ViewModels\VehicleFactory.cs" />
+    <Compile Include="Factories\VehicleViewModelFactory.cs" />
     <Compile Include="ViewModels\VehicleViewModel.cs" />
     <Compile Include="Controls\VehicleControl.xaml.cs">
       <DependentUpon>VehicleControl.xaml</DependentUpon>

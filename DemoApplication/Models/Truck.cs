@@ -1,4 +1,5 @@
 ﻿using DemoApplication.Repos;
+using Ninject;
 
 namespace DemoApplication.Models
 {
@@ -6,7 +7,8 @@ namespace DemoApplication.Models
     {
         public string WheelBase { get; set; }
 
-        public Truck() : base(null, "Truck") { }
-        public Truck(SQLiteRepository repository) : base(repository, "Truck") { }
+        public Truck() : base(null, "Truck") { } // required empty constructor for sqlite
+        [Inject]
+        public Truck(IRepository repository) : base(repository, "Truck") { }
     }
 }

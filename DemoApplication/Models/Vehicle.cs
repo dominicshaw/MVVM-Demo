@@ -1,20 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DemoApplication.Repos;
 
 namespace DemoApplication.Models
 {
     public abstract class Vehicle
     {
-        protected readonly SQLiteRepository _repository;
+        private IRepository _repository;
 
         public string Type { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
         public int Capacity { get; set; }
 
-        protected Vehicle(SQLiteRepository repository, string typ)
+        protected Vehicle(IRepository repository, string typ)
         {
-             _repository = repository;
+            _repository = repository;
 
             Type = typ;
         }
@@ -22,6 +23,11 @@ namespace DemoApplication.Models
         public async Task Save()
         {
             await _repository.Save(this);
+        }
+
+        internal void SetRepository(IRepository repository)
+        {
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
     }
 }

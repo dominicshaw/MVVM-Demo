@@ -7,11 +7,14 @@ using System.Windows.Input;
 using DemoApplication.Models;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
+using log4net;
 
 namespace DemoApplication.ViewModels
 {
     public abstract class VehicleViewModel : INotifyPropertyChanged
     {
+        private readonly ILog _log;
+
         protected abstract Vehicle Vehicle { get; set; }
 
         private string _type;
@@ -66,7 +69,13 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        protected virtual void Load(Vehicle vehicle)
+        protected VehicleViewModel(ILog log)
+        {
+            _log = log;
+            _log.Info("Creating new VehicleViewModel.");
+        }
+
+        internal virtual void Load(Vehicle vehicle)
         {
             Vehicle = vehicle;
 
@@ -79,6 +88,8 @@ namespace DemoApplication.ViewModels
         private async Task SaveVehicle(ObservableCollection<VehicleViewModel> vehicles)
         {
             WorkingViewModel.Instance.Working = true;
+
+            _log.Info("Saving VehicleViewModel.");
 
             Commit();
             await Vehicle.Save();

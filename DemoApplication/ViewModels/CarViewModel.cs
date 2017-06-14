@@ -1,4 +1,5 @@
 using DemoApplication.Models;
+using log4net;
 
 namespace DemoApplication.ViewModels
 {
@@ -24,10 +25,15 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public CarViewModel(Car car)
+        public CarViewModel(ILog log, Car car) : base(log)
         {
             Load(car);
-            TopSpeed = car.TopSpeed;
+        }
+
+        internal override void Load(Vehicle vehicle)
+        {
+            base.Load(vehicle);
+            TopSpeed = ((Car) vehicle).TopSpeed;
         }
 
         public override void Commit()

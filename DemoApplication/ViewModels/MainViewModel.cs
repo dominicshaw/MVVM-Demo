@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DemoApplication.Emulators;
+using DemoApplication.Factories;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
 using DemoApplication.Repos;
@@ -23,7 +24,7 @@ namespace DemoApplication.ViewModels
 
         private readonly IRepository _repository;
         private readonly ILog _log;
-        private readonly VehicleFactory _vehicleFactory;
+        private readonly VehicleViewModelFactory _vehicleFactory;
 
         public ObservableCollection<VehicleViewModel> Vehicles { get; } = new ObservableCollection<VehicleViewModel>();
 
@@ -56,7 +57,7 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public MainViewModel(IRepository repository, ILog log, VehicleFactory vehicleFactory)
+        public MainViewModel(IRepository repository, ILog log, VehicleViewModelFactory vehicleFactory)
         {
             _repository = repository;
             _log = log;
@@ -65,7 +66,7 @@ namespace DemoApplication.ViewModels
             _dispatchedWorker   = new Dispatched(Vehicles);
             _undispatchedWorker = new Undispatched(Vehicles);
 
-            _log.Info("Main View Model initialised.");
+            _log.Info("MainViewModel initialised.");
         }
         
         public async Task Load()
@@ -80,6 +81,8 @@ namespace DemoApplication.ViewModels
                     Vehicles.Add(_vehicleFactory.Create(v));
 
                 SelectedVehicle = Vehicles.First();
+
+                _log.Info("MainViewModel loaded.");
             }
             finally
             {

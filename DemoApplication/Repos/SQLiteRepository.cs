@@ -17,9 +17,29 @@ namespace DemoApplication.Repos
         public SQLiteRepository(ILog log)
         {
             _log = log;
+            _log.Info("Creating new SQLiteRepository.");
         }
 
         public async Task Load()
+        {
+            await CheckAndCreateDatabase();
+            await PopulateIfEmpty();
+
+            foreach (var v in await _db.Table<Car>().ToListAsync())
+            {
+                v.SetRepository(this);
+                Vehicles.Add(v);
+            }
+            foreach (var v in await _db.Table<Truck>().ToListAsync())
+            {
+                v.SetRepository(this);
+                Vehicles.Add(v);
+            }
+
+            _log.Info($"Loaded {Vehicles.Count} vehicles from database.");
+        }
+
+        private async Task CheckAndCreateDatabase()
         {
             var dir = Path.Combine(Path.GetTempPath(), "Vehicles");
 
@@ -27,18 +47,9 @@ namespace DemoApplication.Repos
                 Directory.CreateDirectory(dir);
 
             _db = new SQLiteAsyncConnection(Path.Combine(dir, "VehiclesDB.sqlite"));
-            
+
             await _db.CreateTableAsync<Truck>();
             await _db.CreateTableAsync<Car>();
-            
-            await PopulateIfEmpty();
-
-            foreach (var v in await _db.Table<Car>().ToListAsync())
-                Vehicles.Add(v);
-            foreach (var v in await _db.Table<Truck>().ToListAsync())
-                Vehicles.Add(v);
-
-            _log.Info($"Loaded {Vehicles.Count} vehicles from database.");
         }
 
         private async Task PopulateIfEmpty()
@@ -62,7 +73,10 @@ namespace DemoApplication.Repos
             if (!Vehicles.Contains(vehicle))
                 Vehicles.Add(vehicle);
 
-            await _db.InsertAsync(vehicle);
+            if (vehicle is Car)
+                await _db.InsertAsync(vehicle as Car);
+            else if (vehicle is Truck)
+                await _db.InsertAsync(vehicle as Truck);
         }
     }
 }

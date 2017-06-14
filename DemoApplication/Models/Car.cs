@@ -1,4 +1,5 @@
 ﻿using DemoApplication.Repos;
+using Ninject;
 
 namespace DemoApplication.Models
 {
@@ -6,7 +7,8 @@ namespace DemoApplication.Models
     {
         public decimal TopSpeed { get; set; }
 
-        public Car() : base(null, "Car") { }
-        public Car(SQLiteRepository repository) : base(repository, "Car") { }
+        public Car() : base(null, "Car") { } // required empty constructor for sqlite
+        [Inject]
+        public Car(IRepository repository) : base(repository, "Car") { }
     }
 }
