@@ -79,9 +79,9 @@ namespace DemoApplication.ViewModels
         {
             Vehicle = vehicle;
 
-            Type = Vehicle.Type;
-            Make = Vehicle.Make;
-            Model = Vehicle.Model;
+            Type     = Vehicle.Type;
+            Make     = Vehicle.Make;
+            Model    = Vehicle.Model;
             Capacity = Vehicle.Capacity;
         }
 

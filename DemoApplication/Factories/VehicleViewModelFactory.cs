@@ -1,30 +1,45 @@
-﻿using DemoApplication.Models;
+﻿using System;
+using System.Reflection;
+using DemoApplication.Models;
+using DemoApplication.Repos;
 using DemoApplication.ViewModels;
-using Ninject;
-using Ninject.Syntax;
+using log4net;
 
 namespace DemoApplication.Factories
 {
     public class VehicleViewModelFactory
     {
-        private readonly IResolutionRoot _serviceLocator;
+        private readonly IRepository _repository;
+        private readonly ILog _log;
 
-        public VehicleViewModelFactory(IResolutionRoot serviceLocator)
+        public VehicleViewModelFactory(IRepository repository, ILog log)
         {
-            _serviceLocator = serviceLocator;
+            _repository = repository;
+            _log = log;
         }
 
         public VehicleViewModel Create(Vehicle v)
         {
-            var vvm = _serviceLocator.Get<VehicleViewModel>(v.Type);
-            vvm.Load(v);
+            if (v is Car)
+                return new CarViewModel(_log, v as Car);
 
-            return vvm;
+            if (v is Truck)
+                return new TruckViewModel(_log, v as Truck);
+
+            throw new ArgumentException($"Vehicle is not valid type; \'{v.GetType()}\'.");
         }
 
         public VehicleViewModel Create(string type)
         {
-            return _serviceLocator.Get<VehicleViewModel>(type);
+            var model = Reflect<Vehicle>(type);
+            return Create(model);
+        }
+
+        private T Reflect<T>(string type)
+        {
+            // I wouldn't normally use reflection because it is slow; this is just a play with Activator.
+            var nameSpace = Assembly.GetExecutingAssembly().GetName().Name;
+            return (T) Activator.CreateInstance(nameSpace, $"{nameSpace}.Models.{type}", false, BindingFlags.Instance | BindingFlags.Public | BindingFlags.CreateInstance, null, new object[] { _repository }, null, null).Unwrap();
         }
     }
 }

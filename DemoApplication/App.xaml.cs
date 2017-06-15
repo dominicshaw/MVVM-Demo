@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using DemoApplication.Repos;
-using DemoApplication.ViewModels;
 using log4net;
 using Ninject;
 
@@ -17,10 +16,7 @@ namespace DemoApplication
 
             _kernel.Bind<ILog>().ToMethod(context => LogManager.GetLogger(context.Request.Target?.Member.DeclaringType?.FullName));
             _kernel.Bind<IRepository>().To<SQLiteRepository>().InSingletonScope();
-
-            _kernel.Bind<VehicleViewModel>().To<CarViewModel>().Named("Car");
-            _kernel.Bind<VehicleViewModel>().To<TruckViewModel>().Named("Truck");
-
+            
             InitialiseLogs();
             Start();
         }
