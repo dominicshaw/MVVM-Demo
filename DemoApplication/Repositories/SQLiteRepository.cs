@@ -5,7 +5,7 @@ using DemoApplication.Models;
 using log4net;
 using SQLite;
 
-namespace DemoApplication.Repos
+namespace DemoApplication.Repositories
 {
     public class SQLiteRepository : IRepository
     {

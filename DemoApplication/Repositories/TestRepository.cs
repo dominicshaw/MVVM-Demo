@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DemoApplication.Models;
 
-namespace DemoApplication.Repos
+namespace DemoApplication.Repositories
 {
     public class TestRepository : IRepository
     {

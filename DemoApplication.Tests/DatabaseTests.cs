@@ -1,5 +1,5 @@
 ﻿using System;
-using DemoApplication.Repos;
+using DemoApplication.Repositories;
 using DemoApplication.ViewModels;
 using log4net;
 using Ninject;

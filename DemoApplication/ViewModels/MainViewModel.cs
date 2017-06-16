@@ -8,7 +8,7 @@ using DemoApplication.Emulators;
 using DemoApplication.Factories;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
-using DemoApplication.Repos;
+using DemoApplication.Repositories;
 using log4net;
 
 namespace DemoApplication.ViewModels
@@ -25,8 +25,9 @@ namespace DemoApplication.ViewModels
         private readonly ILog _log;
         private readonly IRepository _repository;
         private readonly VehicleViewModelFactory _vehicleFactory;
+        private int _backgroundThreadFrequency = 20;
 
-        public ObservableCollection<VehicleViewModel> Vehicles { get; } = new ObservableCollection<VehicleViewModel>();
+        public ObservableCollection<VehicleViewModel> Vehicles { get; }
 
         public ICommand AddVehicleCommand => new DelegateCommand<string>(AddVehicle);
 
@@ -57,14 +58,30 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public MainViewModel(ILog log, IRepository repository, VehicleViewModelFactory vehicleFactory)
+        public int BackgroundThreadFrequency
+        {
+            get { return _backgroundThreadFrequency; }
+            set
+            {
+                _backgroundThreadFrequency = value;
+
+                _dispatchedWorker.BackgroundThreadFrequency = value;
+                _undispatchedWorker.BackgroundThreadFrequency = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        public MainViewModel(ILog log, IRepository repository, VehicleViewModelFactory vehicleFactory, ObservableCollection<VehicleViewModel> vehicles, Dispatched dispatched, Undispatched undispatched)
         {
             _log = log;
             _repository = repository;
             _vehicleFactory = vehicleFactory;
 
-            _dispatchedWorker   = new Dispatched(Vehicles);
-            _undispatchedWorker = new Undispatched(Vehicles);
+            Vehicles = vehicles;
+
+            _dispatchedWorker   = dispatched;
+            _undispatchedWorker = undispatched;
 
             _log.Info("MainViewModel initialised.");
         }

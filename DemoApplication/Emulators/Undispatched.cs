@@ -4,12 +4,13 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using DemoApplication.ViewModels;
+using log4net;
 
 namespace DemoApplication.Emulators
 {
     public class Undispatched : BackgroundEmulator
     {
-        public Undispatched(ObservableCollection<VehicleViewModel> vehicles) : base(vehicles)
+        public Undispatched(ILog log, ObservableCollection<VehicleViewModel> vehicles) : base(log, vehicles)
         {
         }
 
@@ -30,7 +31,7 @@ namespace DemoApplication.Emulators
             }
             finally
             {
-                _worker.Change(TimeSpan.FromSeconds(6), Timeout.InfiniteTimeSpan);
+                _worker.Change(TimeSpan.FromMilliseconds(_frequency), Timeout.InfiniteTimeSpan);
             }
         }
     }

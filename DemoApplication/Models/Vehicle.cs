@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DemoApplication.Repos;
+using DemoApplication.Repositories;
 using SQLite;
 
 namespace DemoApplication.Models

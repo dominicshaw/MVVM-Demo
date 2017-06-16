@@ -20,11 +20,18 @@ namespace DemoApplication
             DataContext = _model;
 
             Loaded += MainWindow_Loaded;
+            Closing += MainWindow_Closing;
         }
 
         private async void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             await _model.Load();
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _model.BackgroundThreadUpdates = false;
+            _model.BackgroundThreadFrequency = 1;
         }
     }
 }

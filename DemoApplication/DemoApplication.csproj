@@ -104,9 +104,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Car.cs" />
-    <Compile Include="Repos\IRepository.cs" />
-    <Compile Include="Repos\SQLiteRepository.cs" />
-    <Compile Include="Repos\TestRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\SQLiteRepository.cs" />
+    <Compile Include="Repositories\TestRepository.cs" />
     <Compile Include="Models\Truck.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="MVVM\AsyncCommand.cs" />
