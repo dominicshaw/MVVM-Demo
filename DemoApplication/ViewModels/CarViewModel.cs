@@ -6,12 +6,12 @@ namespace DemoApplication.ViewModels
     public sealed class CarViewModel : VehicleViewModel
     {
         private decimal _topSpeed;
-        private Car _vehicle;
+        private Car _car;
 
         protected override Vehicle Vehicle
         {
-            get { return _vehicle; }
-            set { _vehicle = (Car)value; }
+            get { return _car; }
+            set { _car = (Car)value; }
         }
 
         public decimal TopSpeed
@@ -39,7 +39,7 @@ namespace DemoApplication.ViewModels
         public override void Commit()
         {
             base.Commit();
-            _vehicle.TopSpeed = TopSpeed;
+            _car.TopSpeed = TopSpeed;
         }
     }
 }

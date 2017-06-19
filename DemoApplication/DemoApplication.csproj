@@ -75,6 +75,7 @@
     <Reference Include="SQLitePCLRaw.provider.e_sqlite3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9c301db686d0bd12, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.net45.1.1.5\lib\net45\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
     </Reference>
+    <Reference Include="sysglobl" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -104,6 +105,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Car.cs" />
+    <Compile Include="MVVM\InverseVisibilityConverter.cs" />
+    <Compile Include="MVVM\SecondsToTimespanStringConverter.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\SQLiteRepository.cs" />
     <Compile Include="Repositories\TestRepository.cs" />
@@ -112,11 +115,12 @@
     <Compile Include="MVVM\AsyncCommand.cs" />
     <Compile Include="Services.cs" />
     <Compile Include="Emulators\BackgroundEmulator.cs" />
+    <Compile Include="ViewModels\BackgroundManager.cs" />
     <Compile Include="ViewModels\CarViewModel.cs" />
     <Compile Include="Controls\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\Converters.cs" />
+    <Compile Include="MVVM\BooleanVisibilityConverter.cs" />
     <Compile Include="MVVM\DelegateCommand.cs" />
     <Compile Include="Emulators\Dispatched.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

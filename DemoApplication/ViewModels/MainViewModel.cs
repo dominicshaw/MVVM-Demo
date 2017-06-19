@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using DemoApplication.Emulators;
 using DemoApplication.Factories;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
@@ -17,15 +16,11 @@ namespace DemoApplication.ViewModels
     {
         #region " background variables "
         private VehicleViewModel _selectedVehicle;
-        private readonly BackgroundEmulator _dispatchedWorker;
-        private readonly BackgroundEmulator _undispatchedWorker;
-        private bool _backgroundThreadUpdates;
         #endregion
 
         private readonly ILog _log;
         private readonly IRepository _repository;
         private readonly VehicleViewModelFactory _vehicleFactory;
-        private int _backgroundThreadFrequency = 20;
 
         public ObservableCollection<VehicleViewModel> Vehicles { get; }
 
@@ -42,50 +37,22 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public bool BackgroundThreadUpdates
-        {
-            get { return _backgroundThreadUpdates; }
-            set
-            {
-                if (value == _backgroundThreadUpdates) return;
+        public BackgroundManager BackgroundManager { get; }
 
-                _backgroundThreadUpdates = value;
-
-                _dispatchedWorker.BackgroundThreadUpdates = value;
-                _undispatchedWorker.BackgroundThreadUpdates = value;
-
-                OnPropertyChanged();
-            }
-        }
-
-        public int BackgroundThreadFrequency
-        {
-            get { return _backgroundThreadFrequency; }
-            set
-            {
-                _backgroundThreadFrequency = value;
-
-                _dispatchedWorker.BackgroundThreadFrequency = value;
-                _undispatchedWorker.BackgroundThreadFrequency = value;
-
-                OnPropertyChanged();
-            }
-        }
-
-        public MainViewModel(ILog log, IRepository repository, VehicleViewModelFactory vehicleFactory, ObservableCollection<VehicleViewModel> vehicles, Dispatched dispatched, Undispatched undispatched)
+        public MainViewModel(ILog log, IRepository repository, VehicleViewModelFactory vehicleFactory, BackgroundManager backgroundManager, ObservableCollection<VehicleViewModel> vehicles)
         {
             _log = log;
             _repository = repository;
             _vehicleFactory = vehicleFactory;
 
-            Vehicles = vehicles;
+            BackgroundManager = backgroundManager;
+            BackgroundManager.PropertyChanged += (s, e) => OnPropertyChanged(nameof(BackgroundManager));
 
-            _dispatchedWorker   = dispatched;
-            _undispatchedWorker = undispatched;
+            Vehicles = vehicles;
 
             _log.Info("MainViewModel initialised.");
         }
-        
+
         public async Task Load()
         {
             try

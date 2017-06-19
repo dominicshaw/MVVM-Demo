@@ -6,12 +6,12 @@ namespace DemoApplication.ViewModels
     public sealed class TruckViewModel : VehicleViewModel
     {
         private string _wheelBase;
-        private Truck _vehicle;
+        private Truck _truck;
         
         protected override Vehicle Vehicle
         {
-            get { return _vehicle; }
-            set { _vehicle = (Truck) value; }
+            get { return _truck; }
+            set { _truck = (Truck) value; }
         }
 
         public string WheelBase
@@ -39,7 +39,7 @@ namespace DemoApplication.ViewModels
         public override void Commit()
         {
             base.Commit();
-            _vehicle.WheelBase = WheelBase;
+            _truck.WheelBase = WheelBase;
         }
     }
 }

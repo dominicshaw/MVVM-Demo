@@ -1,6 +1,8 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 using DemoApplication.ViewModels;
 using log4net;
 
@@ -21,7 +23,12 @@ namespace DemoApplication.Emulators
 
                 var randomVehicle = GetRandomVehicle();
 
-                randomVehicle.Capacity = randomVehicle.Capacity + 1;
+                Application.Current.Dispatcher.BeginInvoke(
+                    new Action(() =>
+                    {
+                        randomVehicle.Capacity = randomVehicle.Capacity + 1;
+                        Increment();
+                    }), DispatcherPriority.Normal);
             }
             finally
             {

@@ -30,8 +30,8 @@ namespace DemoApplication
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _model.BackgroundThreadUpdates = false;
-            _model.BackgroundThreadFrequency = 1;
+            _model.BackgroundManager.BackgroundThreadUpdates = false;
+            _model.BackgroundManager.BackgroundThreadFrequency = 1;
         }
     }
 }

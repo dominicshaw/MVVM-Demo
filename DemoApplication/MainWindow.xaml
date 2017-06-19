@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:controls="clr-namespace:DemoApplication.Controls"
+        xmlns:ctrl="clr-namespace:DemoApplication.Controls"
         xmlns:vms="clr-namespace:DemoApplication.ViewModels"
         xmlns:mvvm="clr-namespace:DemoApplication.MVVM"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -38,36 +38,47 @@
 
             <materialDesign:Card Padding="2" Margin="5,10,5,0" Grid.Row="0" Grid.Column="0">
                 <Grid>
+                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    
+
                     <Button Margin="5,2" Grid.Row="0" Grid.Column="0" Content="Add Car" Command="{Binding AddVehicleCommand}" CommandParameter="Car" />
                     <Button Margin="5,2" Grid.Row="0" Grid.Column="1" Content="Add Truck" Command="{Binding AddVehicleCommand}" CommandParameter="Truck" />
 
-                    <CheckBox Margin="5,2" Grid.Row="0" Grid.Column="2" Content="Background Threads?" IsChecked="{Binding BackgroundThreadUpdates}" />
-                    <Slider Margin="5,2" Grid.Row="0" Grid.Column="3" MinWidth="120" SmallChange="1" LargeChange="5" Minimum="1" Maximum="120"
-                            Visibility="{Binding BackgroundThreadUpdates, Converter={mvvm:BooleanVisibilityConverter}}"  
-                            Value="{Binding BackgroundThreadFrequency, UpdateSourceTrigger=PropertyChanged}"
-                            VerticalAlignment="Center"
-                            VerticalContentAlignment="Center" />
-                    <!--
-                    hidden for now until I get the per minute stuff absolutely right. for now it very well slides updates from slow to very fast which was the goal.
-                    <TextBlock Grid.Row="1" Grid.Column="3" FontSize="9"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Visibility="{Binding BackgroundThreadUpdates, Converter={mvvm:BooleanVisibilityConverter}}"  >
-                        <Run Text="{Binding BackgroundThreadFrequency}" />
-                        <Run Text="per updates minute." />
-                    </TextBlock>
-                    -->
+                    <Grid Grid.Column="2">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <CheckBox Margin="5,2" Grid.Row="0" Grid.Column="0" Content="Background Threads?" IsChecked="{Binding BackgroundManager.BackgroundThreadUpdates}" />
+                        <Slider Margin="5,2" Grid.Row="0" Grid.Column="1" MinWidth="120" SmallChange="1" LargeChange="5" Minimum="1" Maximum="120"
+                                Visibility="{Binding BackgroundManager.BackgroundThreadUpdates, Converter={mvvm:BooleanVisibilityConverter}}"  
+                                Value="{Binding BackgroundManager.BackgroundThreadFrequency, UpdateSourceTrigger=PropertyChanged}"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="9"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Visibility="{Binding BackgroundManager.BackgroundThreadUpdates, Converter={mvvm:BooleanVisibilityConverter}}"  >
+                            <Run Text="{Binding BackgroundManager.BackgroundThreadFrequency}" />
+                            <Run Text="per updates minute." />
+                            <Run Text="{Binding BackgroundManager.BackgroundTreadIncrement}" />
+                            <Run Text="in" />
+                            <Run Text="{Binding BackgroundManager.BackgroundThreadRunning, Converter={mvvm:SecondsToTimespanStringConverter}}" />
+                        </TextBlock>
+
+                    </Grid>
+                    
                 </Grid>
             </materialDesign:Card>
             
@@ -96,7 +107,7 @@
 
                         <DataGridTemplateColumn Width="1*">
                             <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="vms:VehicleViewModel">
                                     <TextBlock Text="info" TextDecorations="Underline" Cursor="Hand">
                                         <TextBlock.InputBindings>
                                             <MouseBinding Command="{Binding TellMeMoreCommand}" CommandParameter="{Binding}" MouseAction="LeftClick"></MouseBinding>
@@ -112,7 +123,7 @@
 
             <materialDesign:Card Grid.Row="2" Grid.Column="0" Padding="2" Margin="5,5,5,5">
 
-                <controls:VehicleControl DataContext="{Binding SelectedVehicle, Mode=TwoWay}" />
+                <ctrl:VehicleControl DataContext="{Binding SelectedVehicle, Mode=TwoWay}" />
 
             </materialDesign:Card>
             
@@ -121,7 +132,7 @@
 
         <Grid Visibility="{Binding Source={StaticResource WorkingViewModel}, Path=Working, Converter={mvvm:BooleanVisibilityConverter}}">
             <Grid Background="Black" Opacity="0.4" />
-            <controls:CircularProgressBar />
+            <ctrl:CircularProgressBar />
         </Grid>
     </Grid>
 
