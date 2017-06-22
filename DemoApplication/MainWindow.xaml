@@ -71,7 +71,7 @@
                                    HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Visibility="{Binding BackgroundManager.BackgroundThreadUpdates, Converter={mvvm:BooleanVisibilityConverter}}"  >
                             <Run Text="{Binding BackgroundManager.BackgroundThreadFrequency}" />
-                            <Run Text="per updates minute." />
+                            <Run Text="updates/min." />
                             <Run Text="{Binding BackgroundManager.BackgroundTreadIncrement}" />
                             <Run Text="in" />
                             <Run Text="{Binding BackgroundManager.BackgroundThreadRunning, Converter={mvvm:SecondsToTimespanStringConverter}}" />
@@ -91,8 +91,23 @@
                         <DataGridTextColumn Binding="{Binding Model}" Header="Model" Width="3*" />
 
                         <materialDesign:MaterialDataGridTextColumn Binding="{Binding Capacity}"
-                                                               Header="Capacity"                                                         
-                                                               EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                                                                   Header="Capacity"                                                         
+                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </materialDesign:MaterialDataGridTextColumn>
+                        
+                        <materialDesign:MaterialDataGridTextColumn Binding="{Binding Price}"
+                                                                   Header="Price (£)"                                                         
+                                                                   EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
                             <DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                                     <Setter Property="HorizontalAlignment" Value="Right" />
@@ -135,6 +150,5 @@
             <ctrl:CircularProgressBar />
         </Grid>
     </Grid>
-
 
 </Window>

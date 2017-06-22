@@ -14,6 +14,8 @@ namespace DemoApplication.Emulators
         {
         }
 
+        private readonly Random _rand = new Random();
+
         protected override void Change()
         {
             try
@@ -26,7 +28,13 @@ namespace DemoApplication.Emulators
                 Application.Current.Dispatcher.BeginInvoke(
                     new Action(() =>
                     {
-                        randomVehicle.Capacity = randomVehicle.Capacity + 1;
+                        var adj = _rand.Next(10, 50);
+
+                        if (adj % 2 == 0)
+                            randomVehicle.Price = randomVehicle.Price + adj;
+                        else
+                            randomVehicle.Price = randomVehicle.Price - adj;
+
                         Increment();
                     }), DispatcherPriority.Normal);
             }

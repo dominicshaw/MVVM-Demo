@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -8,6 +9,9 @@ using DemoApplication.Models;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
 using log4net;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 
 namespace DemoApplication.ViewModels
 {
@@ -21,6 +25,7 @@ namespace DemoApplication.ViewModels
         private string _make;
         private string _model;
         private int _capacity;
+        private double _price;
 
         public ICommand SaveVehicleCommand => new AsyncCommand<ObservableCollection<VehicleViewModel>>(SaveVehicle, CanSaveVehicle);
         public ICommand TellMeMoreCommand => new DelegateCommand<VehicleViewModel>(TellMeMore);
@@ -69,10 +74,31 @@ namespace DemoApplication.ViewModels
             }
         }
 
+        public double Price
+        {
+            get { return _price; }
+            set
+            {
+                if (value == _price) return;
+                _price = value;
+                OnPropertyChanged();
+
+                PriceHistory[0].Values.Add(new ObservableValue(_price));
+            }
+        }
+
+        public SeriesCollection PriceHistory { get; } = new SeriesCollection();
+
         protected VehicleViewModel(ILog log)
         {
             _log = log;
             _log.Info("Creating new VehicleViewModel.");
+
+            PriceHistory.Add(new LineSeries
+            {
+                Title = "Price (£)",
+                Values = new ChartValues<ObservableValue>()
+            });
         }
 
         internal virtual void Load(Vehicle vehicle)
@@ -83,6 +109,9 @@ namespace DemoApplication.ViewModels
             Make     = Vehicle.Make;
             Model    = Vehicle.Model;
             Capacity = Vehicle.Capacity;
+            Price    = Vehicle.Price;
+
+            PriceHistory[0].Values.Add(new ObservableValue(Price));
         }
 
         private async Task SaveVehicle(ObservableCollection<VehicleViewModel> vehicles)
@@ -111,6 +140,7 @@ namespace DemoApplication.ViewModels
             Vehicle.Make     = Make;
             Vehicle.Model    = Model;
             Vehicle.Capacity = Capacity;
+            Vehicle.Price    = Price;
         }
         
         private static void TellMeMore(VehicleViewModel vehicle)

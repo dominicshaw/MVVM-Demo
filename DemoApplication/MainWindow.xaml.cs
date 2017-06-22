@@ -1,4 +1,5 @@
 ﻿using DemoApplication.ViewModels;
+using Jot;
 
 namespace DemoApplication
 {
@@ -6,17 +7,18 @@ namespace DemoApplication
     {
         private readonly MainViewModel _model;
 
-        public MainWindow(MainViewModel model)
+        public MainWindow(MainViewModel model, StateTracker tracker)
         {
             InitializeComponent();
 
-            Services.Tracker.Configure(this)
+            _model = model;
+
+            tracker.Configure(this)
                 .IdentifyAs("MainWindow")
                 .AddProperties<MainWindow>(w => w.Height, w => w.Width, w => w.Left, w => w.Top, w => w.WindowState)
                 .RegisterPersistTrigger(nameof(Closed))
                 .Apply();
 
-            _model = model;
             DataContext = _model;
 
             Loaded += MainWindow_Loaded;

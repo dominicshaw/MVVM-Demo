@@ -1,10 +1,7 @@
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Windows;
-using System.Windows.Threading;
 using DemoApplication.Emulators;
 using DemoApplication.Properties;
 
@@ -34,10 +31,7 @@ namespace DemoApplication.ViewModels
 
         private void Increment()
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                BackgroundThreadRunning = BackgroundThreadRunning + 1;
-            }), DispatcherPriority.ApplicationIdle);
+            BackgroundThreadRunning = BackgroundThreadRunning + 1;
         }
 
         public bool BackgroundThreadUpdates
@@ -61,7 +55,9 @@ namespace DemoApplication.ViewModels
 
             if (_backgroundThreadUpdates)
             {
+                BackgroundTreadIncrement = 0;
                 BackgroundThreadRunning = 0;
+
                 _runningFor.Change(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
             }
             else

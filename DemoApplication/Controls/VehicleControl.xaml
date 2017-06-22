@@ -22,6 +22,11 @@
 
     <Grid>
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -30,8 +35,12 @@
             <materialDesign:Card Padding="10,10,10,20" Margin="5,10" Grid.Row="0" Grid.Column="0">
                 <ContentPresenter Content="{Binding}" />
             </materialDesign:Card>
+            
+            <controls:PriceChartControl Grid.Row="0" Grid.Column="1" DataContext="{Binding PriceHistory}" />
 
-            <Button Grid.Row="1" Grid.Column="0" Content="Save" Command="{Binding SaveVehicleCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Vehicles}" Margin="20,0,20,20" />
+            <Button Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Content="Save" Margin="10,0,10,20"
+                    Command="{Binding SaveVehicleCommand}" 
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Vehicles}" />
 
         </Grid>
     </Grid>

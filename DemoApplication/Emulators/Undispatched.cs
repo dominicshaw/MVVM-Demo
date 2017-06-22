@@ -21,7 +21,9 @@ namespace DemoApplication.Emulators
 
                 var randomVehicle = GetRandomVehicle();
 
-                randomVehicle.Make = randomVehicle.Make + "x";
+                randomVehicle.Capacity = randomVehicle.Capacity + 1;
+
+                // could Increment() here to also count these changes but no need. Ensure thread-safe if done in future.
             }
             finally
             {

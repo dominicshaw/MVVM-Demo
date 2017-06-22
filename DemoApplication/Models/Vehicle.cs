@@ -16,6 +16,7 @@ namespace DemoApplication.Models
         public string Make { get; set; }
         public string Model { get; set; }
         public int Capacity { get; set; }
+        public double Price { get; set; }
 
         protected Vehicle(IRepository repository, string typ)
         {

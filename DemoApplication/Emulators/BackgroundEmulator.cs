@@ -11,14 +11,17 @@ namespace DemoApplication.Emulators
         public delegate void IncrementEventHandler(int counter);
         public event IncrementEventHandler Incremented;
 
-        protected static readonly object _sync = new object();
+        private static readonly object _sync = new object();
 
         private int _counter;
-        protected readonly Random _random = new Random();
+        private bool _backgroundThreadUpdates;
+
+        private readonly Random _random = new Random();
+        private readonly ObservableCollection<VehicleViewModel> _vehicles;
+
         protected readonly Timer _worker;
         protected readonly ILog _log;
-        protected readonly ObservableCollection<VehicleViewModel> _vehicles;
-        protected bool _backgroundThreadUpdates;
+
         protected double _frequency = CalcFreq(20);
 
         public double BackgroundThreadFrequency

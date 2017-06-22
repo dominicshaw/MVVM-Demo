@@ -3,12 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vms="clr-namespace:DemoApplication.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewModels:Car}">
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance vms:CarViewModel}">
 
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -25,12 +27,14 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Make:" />
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Model:" />
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Capacity:" />
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Top Speed:" />
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Price:" />
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Top Speed:" />
 
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Make}" />
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Model}" />
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Capacity}" />
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TopSpeed}" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Price}" />
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding TopSpeed}" />
 
     </Grid>
 
