@@ -4,10 +4,10 @@ namespace DemoApplication.ViewModels
 {
     public class PriceHistoryViewModel
     {
-        public decimal Price { get; }
+        public double Price { get; }
         public DateTime Time { get; }
 
-        public PriceHistoryViewModel(decimal price, DateTime time)
+        public PriceHistoryViewModel(double price, DateTime time)
         {
             Price = price;
             Time = time;

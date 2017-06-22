@@ -9,9 +9,6 @@ using DemoApplication.Models;
 using DemoApplication.MVVM;
 using DemoApplication.Properties;
 using log4net;
-using LiveCharts;
-using LiveCharts.Defaults;
-using LiveCharts.Wpf;
 
 namespace DemoApplication.ViewModels
 {
@@ -83,22 +80,18 @@ namespace DemoApplication.ViewModels
                 _price = value;
                 OnPropertyChanged();
 
-                PriceHistory[0].Values.Add(new ObservableValue(_price));
+                ChartData.PriceHistory[0].Values.Add(new PriceHistoryViewModel(_price, DateTime.Now));
             }
         }
 
-        public SeriesCollection PriceHistory { get; } = new SeriesCollection();
+        public PriceChartViewModel ChartData { get; }
 
         protected VehicleViewModel(ILog log)
         {
             _log = log;
             _log.Info("Creating new VehicleViewModel.");
 
-            PriceHistory.Add(new LineSeries
-            {
-                Title = "Price (£)",
-                Values = new ChartValues<ObservableValue>()
-            });
+            ChartData = new PriceChartViewModel();
         }
 
         internal virtual void Load(Vehicle vehicle)
@@ -110,8 +103,6 @@ namespace DemoApplication.ViewModels
             Model    = Vehicle.Model;
             Capacity = Vehicle.Capacity;
             Price    = Vehicle.Price;
-
-            PriceHistory[0].Values.Add(new ObservableValue(Price));
         }
 
         private async Task SaveVehicle(ObservableCollection<VehicleViewModel> vehicles)

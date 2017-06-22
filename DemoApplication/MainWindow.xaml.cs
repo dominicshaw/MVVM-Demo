@@ -1,4 +1,5 @@
-﻿using DemoApplication.ViewModels;
+﻿using System.Threading;
+using DemoApplication.ViewModels;
 using Jot;
 
 namespace DemoApplication
@@ -10,6 +11,8 @@ namespace DemoApplication
         public MainWindow(MainViewModel model, StateTracker tracker)
         {
             InitializeComponent();
+
+            Thread.CurrentThread.Name = "UI Thread";
 
             _model = model;
 

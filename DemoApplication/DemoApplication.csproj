@@ -128,6 +128,7 @@
     <Compile Include="MVVM\DelegateCommand.cs" />
     <Compile Include="Emulators\Dispatched.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\PriceChartViewModel.cs" />
     <Compile Include="ViewModels\PriceHistoryViewModel.cs" />
     <Compile Include="ViewModels\TruckViewModel.cs" />
     <Compile Include="Controls\TruckControl.xaml.cs">

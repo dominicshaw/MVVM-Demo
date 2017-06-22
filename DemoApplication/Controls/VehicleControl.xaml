@@ -36,7 +36,7 @@
                 <ContentPresenter Content="{Binding}" />
             </materialDesign:Card>
             
-            <controls:PriceChartControl Grid.Row="0" Grid.Column="1" DataContext="{Binding PriceHistory}" />
+            <controls:PriceChartControl Grid.Row="0" Grid.Column="1" DataContext="{Binding ChartData}" />
 
             <Button Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Content="Save" Margin="10,0,10,20"
                     Command="{Binding SaveVehicleCommand}" 

@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:vms="clr-namespace:DemoApplication.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance vms:PriceChartViewModel}">
 
     <Grid Margin="15">
         <Grid.Effect>
@@ -27,12 +28,12 @@
             <RowDefinition Height=".50*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" TextAlignment="Center" Padding="10, 10, 0, 5" FontSize="18" Text="Price History" />
-        <lvc:CartesianChart Grid.Row="1" Margin="0, 0, 0, 0" Series="{Binding}" Hoverable="False" DataTooltip="{x:Null}">
+        <lvc:CartesianChart Grid.Row="1" Margin="0, 0, 0, 0" Series="{Binding PriceHistory}" Hoverable="False" DataTooltip="{x:Null}">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Price (£)" LabelsRotation="-35" />
             </lvc:CartesianChart.AxisY>
             <lvc:CartesianChart.AxisX >
-                <lvc:Axis Title="Time" ShowLabels="False" />
+                <lvc:Axis Title="Time" ShowLabels="True" LabelFormatter="{Binding XFormatter}" />
             </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
     </Grid>
