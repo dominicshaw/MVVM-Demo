@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using DemoApplication.Repositories;
 using DemoApplication.ViewModels;
 using log4net;
@@ -22,7 +23,7 @@ namespace DemoApplication.Tests
             _kernel.Bind<IRepository>().To<SQLiteRepository>().InSingletonScope();
         }
 
-        [Test]
+        [Test, Apartment(ApartmentState.STA)]
         public void DatabaseHasRows()
         {
             var mvm = _kernel.Get<MainViewModel>();
