@@ -18,7 +18,6 @@ namespace DemoApplication.ViewModels
 
         protected abstract Vehicle Vehicle { get; set; }
 
-        private string _type;
         private string _make;
         private string _model;
         private int _capacity;
@@ -27,17 +26,7 @@ namespace DemoApplication.ViewModels
         public ICommand SaveVehicleCommand => new AsyncCommand<ObservableCollection<VehicleViewModel>>(SaveVehicle, CanSaveVehicle);
         public ICommand TellMeMoreCommand => new DelegateCommand<VehicleViewModel>(TellMeMore);
 
-        public string Type
-        {
-            get { return _type; }
-            set
-            {
-                if (value == _type) return;
-                _type = value;
-                OnPropertyChanged();
-            }
-        }
-
+        public abstract string Type { get; }
         public string Make
         {
             get { return _make; }
@@ -48,7 +37,6 @@ namespace DemoApplication.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public string Model
         {
             get { return _model; }
@@ -59,7 +47,6 @@ namespace DemoApplication.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public int Capacity
         {
             get { return _capacity; }
@@ -70,7 +57,6 @@ namespace DemoApplication.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public double Price
         {
             get { return _price; }
@@ -84,21 +70,18 @@ namespace DemoApplication.ViewModels
             }
         }
 
-        public PriceChartViewModel ChartData { get; }
+        public PriceChartViewModel ChartData { get; } = new PriceChartViewModel();
 
         protected VehicleViewModel(ILog log)
         {
             _log = log;
             _log.Info("Creating new VehicleViewModel.");
-
-            ChartData = new PriceChartViewModel();
         }
 
         internal virtual void Load(Vehicle vehicle)
         {
             Vehicle = vehicle;
-
-            Type     = Vehicle.Type;
+            
             Make     = Vehicle.Make;
             Model    = Vehicle.Model;
             Capacity = Vehicle.Capacity;

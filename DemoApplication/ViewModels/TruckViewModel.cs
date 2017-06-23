@@ -14,6 +14,8 @@ namespace DemoApplication.ViewModels
             set { _truck = (Truck) value; }
         }
 
+        public override string Type => "Truck";
+
         public string WheelBase
         {
             get { return _wheelBase; }

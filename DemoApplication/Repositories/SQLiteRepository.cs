@@ -11,32 +11,40 @@ namespace DemoApplication.Repositories
     {
         private SQLiteAsyncConnection _db;
         private readonly ILog _log;
-
-        public List<Vehicle> Vehicles { get; } = new List<Vehicle>();
-
+        
         public SQLiteRepository(ILog log)
         {
             _log = log;
             _log.Info("Creating new SQLiteRepository.");
         }
 
-        public async Task Load()
+        public async Task Initialise()
         {
             await CheckAndCreateDatabase();
             await PopulateIfEmpty();
+        }
 
+        public async Task<List<Vehicle>> GetAll()
+        {
+            var vehicles = new List<Vehicle>();
             foreach (var v in await _db.Table<Car>().ToListAsync())
             {
                 v.SetRepository(this);
-                Vehicles.Add(v);
+                vehicles.Add(v);
             }
             foreach (var v in await _db.Table<Truck>().ToListAsync())
             {
                 v.SetRepository(this);
-                Vehicles.Add(v);
+                vehicles.Add(v);
             }
 
-            _log.Info($"Loaded {Vehicles.Count} vehicles from database.");
+            _log.Info($"Loaded {vehicles.Count} vehicles from database.");
+            return vehicles;
+        }
+
+        public async Task<List<Car>> GetCarsByMake(string make)
+        {
+            return await _db.QueryAsync<Car>("SELECT * FROM Car WHERE Make LIKE {0}", make);
         }
 
         private async Task CheckAndCreateDatabase()
@@ -70,9 +78,6 @@ namespace DemoApplication.Repositories
 
         public async Task Save(Vehicle vehicle)
         {
-            if (!Vehicles.Contains(vehicle))
-                Vehicles.Add(vehicle);
-
             await _db.InsertOrReplaceAsync(vehicle);
         }
     }

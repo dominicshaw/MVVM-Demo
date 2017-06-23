@@ -6,8 +6,9 @@ namespace DemoApplication.Repositories
 {
     public interface IRepository
     {
-        List<Vehicle> Vehicles { get; }
-        Task Load();
+        Task Initialise();
+        Task<List<Car>> GetCarsByMake(string make);
+        Task<List<Vehicle>> GetAll();
         Task Save(Vehicle vehicle);
     }
 }

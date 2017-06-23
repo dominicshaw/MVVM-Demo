@@ -59,9 +59,9 @@ namespace DemoApplication.ViewModels
             {
                 WorkingViewModel.Instance.Working = true;
 
-                await _repository.Load();
+                await _repository.Initialise();
 
-                foreach (var v in _repository.Vehicles)
+                foreach (var v in await _repository.GetAll())
                     Vehicles.Add(_vehicleFactory.Create(v));
 
                 SelectedVehicle = Vehicles.First();

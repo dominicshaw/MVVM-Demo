@@ -25,12 +25,13 @@ namespace DemoApplication.Tests
             _kernel.Bind<StateTracker>().ToSelf().InSingletonScope(); // only ever need one jot tracker
         }
 
-        [Test, Apartment(ApartmentState.STA)]
+        [Test]
         public void DatabaseHasRows()
         {
-            var mvm = _kernel.Get<IRepository>();
-            mvm.Load().GetAwaiter().GetResult();
-            Assert.IsNotEmpty(mvm.Vehicles);
+            var repo = _kernel.Get<IRepository>();
+            repo.Initialise().GetAwaiter().GetResult();
+            var vehicles = repo.GetAll().GetAwaiter().GetResult();
+            Assert.IsNotEmpty(vehicles);
         }
 
         public void Dispose()

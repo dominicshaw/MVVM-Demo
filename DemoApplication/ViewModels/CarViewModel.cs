@@ -14,6 +14,8 @@ namespace DemoApplication.ViewModels
             set { _car = (Car)value; }
         }
 
+        public override string Type => "Car";
+
         public decimal TopSpeed
         {
             get { return _topSpeed; }
