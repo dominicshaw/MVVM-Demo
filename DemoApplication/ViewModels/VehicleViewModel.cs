@@ -20,13 +20,14 @@ namespace DemoApplication.ViewModels
 
         private string _make;
         private string _model;
-        private int _capacity;
+        private int    _capacity;
         private double _price;
 
         public ICommand SaveVehicleCommand => new AsyncCommand<ObservableCollection<VehicleViewModel>>(SaveVehicle, CanSaveVehicle);
         public ICommand TellMeMoreCommand => new DelegateCommand<VehicleViewModel>(TellMeMore);
 
         public abstract string Type { get; }
+        
         public string Make
         {
             get { return _make; }

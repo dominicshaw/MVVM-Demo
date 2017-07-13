@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using DemoApplication.Models;
@@ -42,9 +43,21 @@ namespace DemoApplication.Repositories
             return vehicles;
         }
 
+        public async Task<Vehicle> GetVehicle(int id)
+        {
+            Vehicle vehicle = await _db.GetAsync<Car>(x => x.ID == id);
+
+            if (vehicle != null)
+                return vehicle;
+
+            vehicle = await _db.GetAsync<Truck>(x => x.ID == id);
+
+            return vehicle; // can be null
+        }
+
         public async Task<List<Car>> GetCarsByMake(string make)
         {
-            return await _db.QueryAsync<Car>("SELECT * FROM Car WHERE Make LIKE {0}", make);
+            return await _db.Table<Car>().Where(c => c.Make.Equals(make, StringComparison.CurrentCultureIgnoreCase)).ToListAsync();
         }
 
         private async Task CheckAndCreateDatabase()

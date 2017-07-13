@@ -21,11 +21,11 @@ namespace DemoApplication.MVVM
             var t = TimeSpan.FromSeconds(seconds.Value);
             string answer;
             if (t.TotalMinutes < 1.0)
-                answer = string.Format("{0}s", t.Seconds);
+                answer = $"{t.Seconds}s";
             else if (t.TotalHours < 1.0)
-                answer = string.Format("{0}m:{1:D2}s", t.Minutes, t.Seconds);
+                answer = $"{t.Minutes}m:{t.Seconds:D2}s";
             else
-                answer = string.Format("{0}h:{1:D2}m:{2:D2}s", (int) t.TotalHours, t.Minutes, t.Seconds);
+                answer = $"{(int) t.TotalHours}h:{t.Minutes:D2}m:{t.Seconds:D2}s";
 
             return answer;
         }

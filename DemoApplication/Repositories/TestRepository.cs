@@ -21,6 +21,12 @@ namespace DemoApplication.Repositories
             _vehicles.Add(new Truck { Capacity = 3, Make = "Volvo", Model = "VHD", WheelBase = "Small", Price = 8000 });
         }
 
+        public async Task<Vehicle> GetVehicle(int id)
+        {
+            await Task.Delay(100);
+            return _vehicles.Find(v => v.ID == id);
+        }
+
         public async Task<List<Car>> GetCarsByMake(string make)
         {
             await Task.Delay(500);
