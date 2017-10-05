@@ -25,6 +25,13 @@ namespace DemoApplication
 
             InitialiseLogs();
             Start();
+
+            var log = LogManager.GetLogger(GetType());
+
+            Current.DispatcherUnhandledException +=
+                (s, ex) => log.Fatal("Dispatcher Unhandled Exception: {0}", ex.Exception);
+            AppDomain.CurrentDomain.UnhandledException +=
+                (s, ex) => log.Fatal($"AppDomain.CurrentDomain Exception: {ex.ExceptionObject}");
         }
 
         private void Start()
