@@ -60,7 +60,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <CheckBox Margin="5,2" Grid.Row="0" Grid.Column="0" Content="Background Threads?" IsChecked="{Binding BackgroundManager.BackgroundThreadUpdates}" />
+                        <CheckBox Margin="5,2" Grid.Row="0" Grid.Column="0" Content="Background Threads?" IsChecked="{Binding BackgroundManager.BackgroundThreadUpdates}" VerticalAlignment="Center" VerticalContentAlignment="Center" />
                         <Slider Margin="5,2" Grid.Row="0" Grid.Column="1" MinWidth="120" SmallChange="1" LargeChange="5" Minimum="1" Maximum="120"
                                 Visibility="{Binding BackgroundManager.BackgroundThreadUpdates, Converter={mvvm:BooleanVisibilityConverter}}"  
                                 Value="{Binding BackgroundManager.BackgroundThreadFrequency, UpdateSourceTrigger=PropertyChanged}"
